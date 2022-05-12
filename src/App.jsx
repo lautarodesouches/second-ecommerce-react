@@ -1,5 +1,7 @@
 // React Router DOM
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+// Routes
+import { home, pageNotFound } from "routes/Routes";
 // Pages
 import Home from "./pages/Home";
 import PageNotFound from "./pages/PageNotFound";
@@ -12,8 +14,8 @@ function App() {
       </header>
       <main className="min-h-screen bg-neutral-300">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path={home} element={<Home />} />
+          <Route path={pageNotFound} element={<PageNotFound />} />
         </Routes>
       </main>
       <footer>
