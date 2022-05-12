@@ -1,8 +1,8 @@
-const { primary, primaryHover } = require("theme/Colors")
+const { bgPrimary, bgPrimaryHover } = require("theme/Colors")
 
 const Button = ({children}) => {
     return(
-        <button className={`${primary} text-white px-4 py-2 rounded hover:${primaryHover} transition-all`}>
+        <button className={`${bgPrimary} text-white px-4 py-2 rounded hover:${bgPrimaryHover} transition-all`}>
             {children}
         </button>
     );
