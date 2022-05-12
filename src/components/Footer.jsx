@@ -15,7 +15,7 @@ const Footer = () => {
                 <Link to={home}>Privacidad</Link>
             </div>
             <div>
-                {date.getFullYear()}
+                ©{date.getFullYear()}
             </div>
         </footer>
     );
