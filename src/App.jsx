@@ -2,9 +2,10 @@
 import Footer from "components/Footer";
 import NavBar from "components/NavBar";
 import Categories from "pages/Categories";
+import Search from "pages/Seach";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Routes
-import { categories, home, pageNotFound } from "routes/Routes";
+import { categories, home, pageNotFound, search } from "routes/Routes";
 // Pages
 import Home from "./pages/Home";
 import PageNotFound from "./pages/PageNotFound";
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path={home} element={<Home />} />
           <Route path={categories} element={<Categories />} />
+          <Route path={search} element={<Search />} />
           <Route path={pageNotFound} element={<PageNotFound />} />
         </Routes>
       </main>

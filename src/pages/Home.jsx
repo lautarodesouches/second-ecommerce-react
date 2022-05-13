@@ -30,7 +30,6 @@ const Home = () => {
 
     return(
         <section className="fade">
-            <h2 className="pb-4">Prueba</h2>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
                 {
                     items.map(el => (
