@@ -14,7 +14,7 @@ function App() {
       <header>
         <NavBar />
       </header>
-      <main className="min-h-screen bg-neutral-300 p-4">
+      <main className="min-h-screen bg-neutral-200 p-4">
         <Routes>
           <Route path={home} element={<Home />} />
           <Route path={pageNotFound} element={<PageNotFound />} />

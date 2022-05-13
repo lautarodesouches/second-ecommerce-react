@@ -1,3 +1,4 @@
+import ItemCard from "components/ItemCard";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import db from "utils/firebaseConfig";
@@ -29,12 +30,14 @@ const Home = () => {
 
     return(
         <section className="fade">
-            <h3>prueba</h3>
-            {
-                items.map(el => (
-                    <h3 className="fade" key={el.id}>{el.name}</h3>
-                ))
-            }
+            <h2 className="pb-4">Prueba</h2>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
+                {
+                    items.map(el => (
+                        <ItemCard key={el.id} id={el.id} name={el.name} price={el.price} freeShipping={el.freeShipping} />
+                    ))
+                }
+            </div>
         </section>
     );
 }

@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import { categories, favourites, home, offers, products } from "routes/Routes";
-import { bgPrimary } from "theme/Colors";
 import CartIcon from "./CartIcon";
 
 const NavBar = () => {
     return(
-        <nav className={`${bgPrimary} text-white p-2`}>
+        <nav className="bg-sky-700 text-white p-2">
             <div className="grid grid-cols-3 items-center text-center">
                 <div>
                     <Link to={home}>Titulo</Link>
