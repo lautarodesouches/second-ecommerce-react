@@ -13,6 +13,7 @@ import { shuffle } from "utils/functions";
 const Search = () => {
 
     const [ items, setItems ] = useState([]);
+    const [ copyItems, setCopyItems ] = useState([]);
     const [ loadign, setLoadign ] = useState(true);
 
     // Get search params
@@ -26,6 +27,7 @@ const Search = () => {
         // If param exist, delete it, else set it
         searchParams.get(type) === value ? searchParams.delete(type) : searchParams.set(type, value);
         setSearchParams(searchParams);
+        filter(copyItems)
     }
 
     const filter = (array) => {
@@ -65,6 +67,7 @@ const Search = () => {
                     )
                 )
                 setItems(array);
+                setCopyItems(array);
 
                 // Filter data
                 filter(array);
