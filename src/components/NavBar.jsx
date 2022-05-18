@@ -8,6 +8,7 @@ import { cart, categories, favourites, home, offers, search } from "routes/Route
 import CartIcon from "./CartIcon";
 import ChevronDown from "./ChevronDown";
 import ChevronUp from "./ChevronUp";
+import SearchBar from "./SearchBar";
 
 const NavBar = () => {
 
@@ -22,12 +23,12 @@ const NavBar = () => {
     return(
         <nav className="bg-sky-700 text-white p-2">
             <div className="grid grid-cols-3 items-end text-center">
-                <div>
-                    <Link to={home} className="text-lg">Titulo</Link>
+                <div className="h-full flex items-end justify-center">
+                    <Link to={home}>
+                        <h1 className="text-lg">Titulo</h1>
+                    </Link>
                 </div>
-                <form onSubmit={() => {}}>
-                    <input type="text" className="bg-white rounded w-full py-1 px-2 text-black" placeholder="Buscar" />
-                </form>
+                <SearchBar />
                 <div className="m-auto">
                     <Link to={cart} >
                         <CartIcon prop="w-5 fill-white" />
