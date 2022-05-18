@@ -97,9 +97,17 @@ const Search = () => {
                                 <h4 className="text-xl">Categorias:</h4>
                                 <ul className="pl-4 pt-2">
                                     {
+                                        searchParams.get('category') !== null
+                                        ?
+                                        <li className="my-1 fade">
+                                            <a className="cursor-pointer bg-sky-600 px-2 text-white rounded" onClick={ () => {handleFilter('category', searchParams.get('category'))} } >
+                                                {searchParams.get('category')}
+                                            </a>
+                                        </li>
+                                        :
                                         categories.map( category =>
                                                 (
-                                                    <li key={category}>
+                                                    <li className="my-1 fade" key={category}>
                                                         <a className="cursor-pointer" onClick={ () => {handleFilter('category', category)} }>
                                                         {category}
                                                         </a>
@@ -113,9 +121,17 @@ const Search = () => {
                                 <h4 className="text-lg">Marcas:</h4>
                                 <ul className="pl-4 pt-2">
                                     {
+                                        searchParams.get('brand') !== null
+                                        ?
+                                        <li className="my-1 fade">
+                                            <a className="cursor-pointer bg-sky-600 px-2 text-white rounded" onClick={ () => {handleFilter('brand', searchParams.get('brand'))} } >
+                                                {searchParams.get('brand')}
+                                            </a>
+                                        </li>
+                                        :
                                         brands.map( brand =>
                                                 (
-                                                    <li key={brand}>
+                                                    <li className="my-1 fade" key={brand}>
                                                         <a className="cursor-pointer" onClick={ () => {handleFilter('brand', brand)} }>
                                                         {brand}
                                                         </a>
