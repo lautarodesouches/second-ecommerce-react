@@ -1,4 +1,5 @@
 // Components
+import Filter from "components/Filter";
 import ItemCard from "components/ItemCard";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
@@ -93,54 +94,11 @@ const Search = () => {
                 (
                     <>
                         <div id="filtros" className="fade md:w-1/3 text-left p-4">
-                            <div className="flex flex-col">
-                                <h4 className="text-xl">Categorias:</h4>
-                                <ul className="pl-4 pt-2">
-                                    {
-                                        searchParams.get('category') !== null
-                                        ?
-                                        <li className="my-1 fade">
-                                            <a className="cursor-pointer bg-sky-600 px-2 text-white rounded" onClick={ () => {handleFilter('category', searchParams.get('category'))} } >
-                                                {searchParams.get('category')}
-                                            </a>
-                                        </li>
-                                        :
-                                        categories.map( category =>
-                                                (
-                                                    <li className="my-1 fade" key={category}>
-                                                        <a className="cursor-pointer" onClick={ () => {handleFilter('category', category)} }>
-                                                        {category}
-                                                        </a>
-                                                    </li>
-                                                )
-                                        )
-                                    }
-                                </ul>
-                            </div>
-                            <div className="flex flex-col mt-4">
-                                <h4 className="text-lg">Marcas:</h4>
-                                <ul className="pl-4 pt-2">
-                                    {
-                                        searchParams.get('brand') !== null
-                                        ?
-                                        <li className="my-1 fade">
-                                            <a className="cursor-pointer bg-sky-600 px-2 text-white rounded" onClick={ () => {handleFilter('brand', searchParams.get('brand'))} } >
-                                                {searchParams.get('brand')}
-                                            </a>
-                                        </li>
-                                        :
-                                        brands.map( brand =>
-                                                (
-                                                    <li className="my-1 fade" key={brand}>
-                                                        <a className="cursor-pointer" onClick={ () => {handleFilter('brand', brand)} }>
-                                                        {brand}
-                                                        </a>
-                                                    </li>
-                                                )
-                                        )
-                                    }
-                                </ul>
-                            </div>
+                            {
+                                // title, param, array, handleFilter
+                            }
+                            <Filter title='Categorias' param='category' array={categories} handleFilter={handleFilter} searchParams={searchParams} />
+                            <Filter title='Marcas' param='brand' array={brands} handleFilter={handleFilter} searchParams={searchParams} />
                         </div>
                         <div id="resultados">
                             {
