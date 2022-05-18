@@ -1,6 +1,10 @@
+// React
 import { useState } from "react";
+// React Router DOM
 import { Link } from "react-router-dom";
+// Routes
 import { cart, categories, favourites, home, offers, search } from "routes/Routes";
+// Components
 import CartIcon from "./CartIcon";
 import ChevronDown from "./ChevronDown";
 import ChevronUp from "./ChevronUp";
@@ -21,9 +25,9 @@ const NavBar = () => {
                 <div>
                     <Link to={home} className="text-lg">Titulo</Link>
                 </div>
-                <div>
+                <form onSubmit={() => {}}>
                     <input type="text" className="bg-white rounded w-full py-1 px-2 text-black" placeholder="Buscar" />
-                </div>
+                </form>
                 <div className="m-auto">
                     <Link to={cart} >
                         <CartIcon prop="w-5 fill-white" />

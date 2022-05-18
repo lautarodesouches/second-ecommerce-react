@@ -1,6 +1,7 @@
 // Components
 import Filter from "components/Filter";
 import ItemCard from "components/ItemCard";
+import Loading from "components/Loading";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
@@ -82,17 +83,14 @@ const Search = () => {
     },[])
 
     return(
-        // If is loadign center
-        <section className="min-h-screen text-center flex flex-col md:flex-row" >
+        <>
             {
                 loadign
                 ?
-                <>
-                    <h2 className="animate-pulse text-3xl self-center m-auto">Cargando</h2>
-                </>
+                <Loading />
                 :
                 (
-                    <>
+                    <section className="min-h-screen text-center flex flex-col md:flex-row" >
                         <div id="filtros" className="fade md:w-1/3 text-left p-4">
                             {
                                 // title, param, array, handleFilter
@@ -117,10 +115,10 @@ const Search = () => {
                                 <h2 className="fade py-10 md:pt-40">No se han encontrado productos que coincidan con tu búsqueda</h2>
                             }
                         </div>
-                    </>
+                    </section>
                 )
             }
-        </section>
+        </>
     );
 }
 

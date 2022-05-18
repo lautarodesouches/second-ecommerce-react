@@ -1,13 +1,14 @@
 // React Router DOM
-import Footer from "components/Footer";
-import NavBar from "components/NavBar";
-import Categories from "pages/Categories";
-import Search from "pages/Seach";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Routes
 import { categories, home, pageNotFound, search } from "routes/Routes";
+// Components
+import Footer from "components/Footer";
+import NavBar from "components/NavBar";
 // Pages
 import Home from "./pages/Home";
+import Categories from "pages/Categories";
+import Search from "pages/Seach";
 import PageNotFound from "./pages/PageNotFound";
 
 function App() {

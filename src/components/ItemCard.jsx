@@ -1,5 +1,8 @@
+// React Router DOM
 import { Link } from "react-router-dom";
+// Routes
 import { products } from "routes/Routes";
+// Utils
 import { formatNumber } from "utils/functions";
 
 const ItemCard = ({id, name, price, freeShipping}) => {

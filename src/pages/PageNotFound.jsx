@@ -1,3 +1,4 @@
+// Components
 import NotFound from "components/NotFound";
 
 const PageNotFound = () => {
