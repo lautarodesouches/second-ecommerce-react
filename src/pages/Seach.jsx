@@ -5,7 +5,7 @@ import Loading from "components/Loading";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 // React DOM
 import { useSearchParams } from "react-router-dom";
 // Utils
@@ -32,11 +32,11 @@ const Search = () => {
         filter(copyItems)
     }
 
-    const filter = (array) => {
+    const filter = useCallback((array) => {
         searchParams.get('category') !== null && (array = array.filter( e => e.category === searchParams.get('category')))
         searchParams.get('brand') !== null && (array = array.filter( e => e.brand === searchParams.get('brand')))
         setItems(array);
-    }
+    }, [searchParams])
 
     // UseEffect for getting filters
     useEffect(() => {
@@ -80,7 +80,7 @@ const Search = () => {
             .catch((error) => {
                 console.log(error);
             })
-    },[])
+    },[filter])
 
     return(
         <>
