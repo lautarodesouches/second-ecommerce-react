@@ -1,5 +1,5 @@
 // Components
-import ItemCard from "components/ItemCard";
+import ItemsContainer from "components/ItemsContainer";
 import Loading from "components/Loading";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
@@ -11,7 +11,9 @@ import { shuffle } from "utils/functions";
 
 const Home = () => {
     
-    const [items, setItems] = useState([]);
+    const [productosRecomendados, setProductosRecomendados] = useState([]);
+    const [productosDestacados, setProductosDestacados] = useState([]);
+    const [ofertas, setOfertas] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,14 +22,32 @@ const Home = () => {
             return await getDocs(querySnapshot);
         })()
             .then((result) => {
-                setItems( 
-                    shuffle(
-                        result.docs.map( (doc) => (
-                            { id: doc.id, ...doc.data() }
-                            )
+
+                // Get data
+                const array = shuffle(
+                    result.docs.map( (doc) => (
+                        { id: doc.id, ...doc.data() }
                         )
-                    ) 
-                );
+                    )
+                )
+                
+                // Recomendados
+                let recomendados = array.filter( (e) => e.discount > 0)
+                // Limit array
+                recomendados.length = 4
+                setProductosRecomendados(recomendados);
+                
+                // Destacados
+                let destacados = array.filter( (e) => e.discount > 0)
+                // Limit array
+                destacados.length = 4
+                setProductosDestacados(destacados);
+                
+                // Offers
+                let ofertas = array.filter( (e) => e.discount > 0)
+                // Limit array
+                ofertas.length = 4
+                setOfertas(ofertas);
 
                 // Loading finished
                 setLoading(false);
@@ -45,18 +65,9 @@ const Home = () => {
                 <Loading />
                 :
                 <>
-                    <section className="fade text-center mt-5">
-                        <h2 className="text-3xl mb-5">Productos Recomendados</h2>
-                        {/* <h2 className="text-3xl">Productos Destacados</h2>
-                        <h2 className="text-3xl">Ofertas</h2> */}
-                        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
-                        {
-                            items.map(el => (
-                                <ItemCard key={el.id} id={el.id} name={el.name} price={el.price} freeShipping={el.freeShipping} discount={el.discount} />
-                            ))
-                        }
-                        </div>
-                    </section>
+                    <ItemsContainer title="Productos Recomendados" array={productosRecomendados} />
+                    <ItemsContainer title="Productos Destacados" array={productosDestacados} />
+                    <ItemsContainer title="Ofertas" array={ofertas} />
                 </>
             }
         </>
