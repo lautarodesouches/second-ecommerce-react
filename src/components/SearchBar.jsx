@@ -1,5 +1,3 @@
-// React
-import { useEffect, useState } from "react";
 // React Router DOM
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 // Routes
@@ -13,24 +11,18 @@ const SearchBar = () => {
 
     const location = useLocation()
 
-    const [ query, setQuery ] = useState(null);
-
     // Get search params
     let [ searchParams, setSearchParams ] = useSearchParams();
-    
-    useEffect( () => {
-        if (query != null) {
-            // Set params
-            searchParams.set('query', query);
-            setSearchParams(searchParams);
-        }
-    }, [query])
 
     return(
         <form className="flex bg-white rounded" onSubmit={(e) => {
                     e.preventDefault();
                     //
-                    setQuery(e.target[0].value);
+                    if (e.target[0].value != null) {
+                        // Set params
+                        searchParams.set('query', e.target[0].value);
+                        setSearchParams(searchParams);
+                    }
                     // Redirect
                     location.pathname !== search && navigate(search);
                     // Clean bar

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
 
-const Home = () => {
+const Offers = () => {
     
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -20,20 +20,22 @@ const Home = () => {
             return await getDocs(querySnapshot);
         })()
             .then((result) => {
-                setItems( 
-                    shuffle(
-                        result.docs.map( (doc) => (
-                            { id: doc.id, ...doc.data() }
-                            )
+                
+                const array = shuffle(
+                    result.docs.map( (doc) => (
+                        { id: doc.id, ...doc.data() }
                         )
-                    ) 
+                    )
+                )
+                setItems(
+                    array.filter( (e) => e.discount > 0)
                 );
 
                 // Loading finished
                 setLoading(false);
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error, ' error');
             })
     },[])
 
@@ -46,9 +48,7 @@ const Home = () => {
                 :
                 <>
                     <section className="fade text-center mt-5">
-                        <h2 className="text-3xl mb-5">Productos Recomendados</h2>
-                        {/* <h2 className="text-3xl">Productos Destacados</h2>
-                        <h2 className="text-3xl">Ofertas</h2> */}
+                        <h2 className="text-3xl mb-5">Ofertas</h2>
                         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
                         {
                             items.map(el => (
@@ -63,4 +63,4 @@ const Home = () => {
     );
 }
 
-export default Home;
+export default Offers;

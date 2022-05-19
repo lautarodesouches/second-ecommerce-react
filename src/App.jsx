@@ -1,13 +1,14 @@
 // React Router DOM
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Routes
-import { categories, home, pageNotFound, search } from "routes/Routes";
+import { categories, home, offers, pageNotFound, search } from "routes/Routes";
 // Components
 import Footer from "components/Footer";
 import NavBar from "components/NavBar";
 // Pages
 import Home from "./pages/Home";
 import Categories from "pages/Categories";
+import Offers from "pages/Offers";
 import Search from "pages/Seach";
 import PageNotFound from "./pages/PageNotFound";
 
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path={home} element={<Home />} />
           <Route path={categories} element={<Categories />} />
+          <Route path={offers} element={<Offers />} />
           <Route path={search} element={<Search />} />
           <Route path={pageNotFound} element={<PageNotFound />} />
         </Routes>
