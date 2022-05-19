@@ -1,5 +1,6 @@
 // Components
 import ItemCard from "components/ItemCard";
+import ItemsContainer from "components/ItemsContainer";
 import Loading from "components/Loading";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
@@ -46,18 +47,7 @@ const Offers = () => {
                 ?
                 <Loading />
                 :
-                <>
-                    <section className="fade text-center mt-5">
-                        <h2 className="text-3xl mb-5">Ofertas</h2>
-                        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
-                        {
-                            items.map(el => (
-                                <ItemCard key={el.id} id={el.id} name={el.name} price={el.price} freeShipping={el.freeShipping} discount={el.discount} />
-                            ))
-                        }
-                        </div>
-                    </section>
-                </>
+                <ItemsContainer title="Ofertas" array={items} />
             }
         </>
     );
