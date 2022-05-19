@@ -92,9 +92,6 @@ const Search = () => {
                 (
                     <section className="min-h-screen text-center flex flex-col md:flex-row" >
                         <div id="filtros" className="fade md:w-1/3 text-left p-4">
-                            {
-                                // title, param, array, handleFilter
-                            }
                             <Filter title='Categorias' param='category' array={categories} handleFilter={handleFilter} searchParams={searchParams} />
                             <Filter title='Marcas' param='brand' array={brands} handleFilter={handleFilter} searchParams={searchParams} />
                         </div>
