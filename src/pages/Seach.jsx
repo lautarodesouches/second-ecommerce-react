@@ -33,8 +33,15 @@ const Search = () => {
     }
 
     const filter = useCallback((array) => {
-        searchParams.get('category') !== null && (array = array.filter( e => e.category === searchParams.get('category')))
-        searchParams.get('brand') !== null && (array = array.filter( e => e.brand === searchParams.get('brand')))
+        // Get all filters
+        let query = searchParams.get('query');
+        let category = searchParams.get('category');
+        let brand = searchParams.get('brand');
+        // Use filter
+        query && (array = array.filter( e => e.category.toLowerCase().includes(query) || e.brand.toLowerCase().includes(query) || e.name.toLowerCase().includes(query)))
+        category && (array = array.filter( e => e.category === category))
+        brand && (array = array.filter( e => e.brand === brand))
+        // Set result
         setItems(array);
     }, [searchParams])
 
@@ -91,7 +98,7 @@ const Search = () => {
                 :
                 (
                     <section className="min-h-screen text-center flex flex-col md:flex-row" >
-                        <div id="filtros" className="fade md:w-1/3 text-left p-4">
+                        <div id="filtros" className="fade md:w-1/3 text-left pb-5 md:p-4">
                             <Filter title='Categorias' param='category' array={categories} handleFilter={handleFilter} searchParams={searchParams} />
                             <Filter title='Marcas' param='brand' array={brands} handleFilter={handleFilter} searchParams={searchParams} />
                         </div>

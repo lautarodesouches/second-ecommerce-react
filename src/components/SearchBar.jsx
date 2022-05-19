@@ -1,7 +1,7 @@
 // React
 import { useEffect, useState } from "react";
 // React Router DOM
-import { matchRoutes, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 // Routes
 import { search } from "routes/Routes";
 // Components
@@ -19,9 +19,11 @@ const SearchBar = () => {
     let [ searchParams, setSearchParams ] = useSearchParams();
     
     useEffect( () => {
-        // Set params
-        searchParams.set('query', query);
-        setSearchParams(searchParams);
+        if (query != null) {
+            // Set params
+            searchParams.set('query', query);
+            setSearchParams(searchParams);
+        }
     }, [query])
 
     return(
