@@ -5,15 +5,13 @@ import { useState } from "react";
 const Filter = ({title, param, array, handleFilter, searchParams}) => {
 
     const [hideOptions, setHideOptions] = useState(true);
-    
-    let ulClass = "md:pl-4 pt-2 md:block";
 
     return(
         <div className="flex flex-col my-2 bg-white md:bg-transparent p-2 rounded md:text-left text-center">
             <h4 className="text-xl" onClick={() => {setHideOptions(!hideOptions)}}>
                 {title}
             </h4>
-            <ul className={hideOptions ? ulClass + " hidden" : ulClass}>
+            <ul className={`md:pl-4 pt-2 md:block ${hideOptions && "hidden"}`}>
                 {
                     // If there is a param as filter in url
                     searchParams.get(param) !== null

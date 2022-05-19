@@ -44,15 +44,27 @@ const Home = () => {
                 ?
                 <Loading />
                 :
-                <section className="fade">
-                    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
-                        {
-                            items.map(el => (
-                                <ItemCard key={el.id} id={el.id} name={el.name} price={el.price} freeShipping={el.freeShipping} />
-                            ))
-                        }
-                    </div>
-                </section>
+                <>
+                    <section className="fade text-center mt-5">
+                        <h2 className="text-3xl">Productos Recomendados</h2>
+                        {/* <h2 className="text-3xl">Productos Destacados</h2>
+                        <h2 className="text-3xl">Ofertas</h2> */}
+                        <div className="flex flex-wrap mt-5 gap-4">
+                            <div className="grow">
+                                <ItemCard />
+                            </div>
+                            <div className="grow">
+                                <ItemCard />
+                            </div>
+                            <div className="grow">
+                                <ItemCard />
+                            </div>
+                            <div className="grow">
+                                <ItemCard />
+                            </div>
+                        </div>
+                    </section>
+                </>
             }
         </>
     );
