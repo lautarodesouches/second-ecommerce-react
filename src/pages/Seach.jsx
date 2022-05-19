@@ -110,7 +110,7 @@ const Search = () => {
                                     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
                                         {
                                             items.map(el => (
-                                                <ItemCard key={el.id} id={el.id} name={el.name} price={el.price} freeShipping={el.freeShipping} />
+                                                <ItemCard key={el.id} id={el.id} name={el.name} price={el.price} freeShipping={el.freeShipping} discount={el.discount} />
                                             ))
                                         }
                                     </div>
