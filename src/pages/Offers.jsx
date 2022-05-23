@@ -21,14 +21,14 @@ const Offers = () => {
         })()
             .then((result) => {
                 
-                const array = shuffle(
+                const data = shuffle(
                     result.docs.map( (doc) => (
                         { id: doc.id, ...doc.data() }
                         )
                     )
                 )
                 setItems(
-                    array.filter( (e) => e.discount > 0)
+                    data.filter( (e) => e.discount > 0)
                 );
 
                 // Loading finished

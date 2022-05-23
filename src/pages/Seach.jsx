@@ -32,17 +32,17 @@ const Search = () => {
         filter(copyItems)
     }
 
-    const filter = useCallback((array) => {
+    const filter = useCallback((data) => {
         // Get all filters
         let query = searchParams.get('query');
         let category = searchParams.get('category');
         let brand = searchParams.get('brand');
         // Use filter
-        query && (array = array.filter( e => e.category.toLowerCase().includes(query) || e.brand.toLowerCase().includes(query) || e.name.toLowerCase().includes(query)))
-        category && (array = array.filter( e => e.category === category))
-        brand && (array = array.filter( e => e.brand === brand))
+        query && (data = data.filter( e => e.category.toLowerCase().includes(query) || e.brand.toLowerCase().includes(query) || e.name.toLowerCase().includes(query)))
+        category && (data = data.filter( e => e.category === category))
+        brand && (data = data.filter( e => e.brand === brand))
         // Set result
-        setItems(array);
+        setItems(data);
     }, [searchParams])
 
     // UseEffect for getting filters
@@ -69,17 +69,17 @@ const Search = () => {
                 setBrands([...getBrands]);
 
                 // Set Items
-                const array = shuffle(
+                const data = shuffle(
                     result.docs.map( (doc) => (
                         { id: doc.id, ...doc.data() }
                         )
                     )
                 )
-                setItems(array);
-                setCopyItems(array);
+                setItems(data);
+                setCopyItems(data);
 
                 // Filter data
-                filter(array);
+                filter(data);
 
                 // Loadign finished
                 setLoadign(false);
@@ -99,6 +99,9 @@ const Search = () => {
                 (
                     <section className="min-h-screen text-center flex flex-col md:flex-row" >
                         <div id="filtros" className="fade md:w-1/3 text-left pb-5 md:p-4">
+                            {
+                                searchParams.get('query') && <Filter title='Busqueda' param='query' array={[searchParams.get('query')]} handleFilter={handleFilter} searchParams={searchParams} />
+                            }
                             <Filter title='Categorias' param='category' array={categories} handleFilter={handleFilter} searchParams={searchParams} />
                             <Filter title='Marcas' param='brand' array={brands} handleFilter={handleFilter} searchParams={searchParams} />
                         </div>
