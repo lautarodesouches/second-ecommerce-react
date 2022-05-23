@@ -104,7 +104,7 @@ const Search = () => {
                 <Loading />
                 :
                 (
-                    <section className="min-h-screen text-center flex flex-col md:flex-row" >
+                    <section className="container min-h-screen text-center flex flex-col md:flex-row" >
                         <div id="filtros" className="fade md:w-1/3 text-left pb-5 md:p-4">
                             {
                                 searchParams.get('query') &&
