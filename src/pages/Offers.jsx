@@ -1,5 +1,4 @@
 // Components
-import ItemCard from "components/ItemCard";
 import ItemsContainer from "components/ItemsContainer";
 import Loading from "components/Loading";
 // Firebase

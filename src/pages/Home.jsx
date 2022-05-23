@@ -11,8 +11,8 @@ import { shuffle } from "utils/functions";
 
 const Home = () => {
     
-    const [productosRecomendados, setProductosRecomendados] = useState([]);
-    const [productosDestacados, setProductosDestacados] = useState([]);
+    const [recommended, setRecommended] = useState([]);
+    const [featured, setFeatured] = useState([]);
     const [ofertas, setOfertas] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -24,27 +24,31 @@ const Home = () => {
             .then((result) => {
 
                 // Get data
-                const array = shuffle(
+                const data = shuffle(
                     result.docs.map( (doc) => (
                         { id: doc.id, ...doc.data() }
                         )
                     )
                 )
                 
-                // Recomendados
-                let recomendados = array.filter( (e) => e.discount > 0)
+                // Recommended
+                const recommended = [...data];
+                // Sort by amount available
+                recommended.sort( (a,b) => b.amountAvailable - a.amountAvailable);
                 // Limit array
-                recomendados.length = 4
-                setProductosRecomendados(recomendados);
+                recommended.length = 4
+                setRecommended(recommended);
                 
-                // Destacados
-                let destacados = array.filter( (e) => e.discount > 0)
+                // Featured
+                const featured = [...data];
+                // Sort by sold
+                featured.sort( (a,b) => b.sold - a.sold);
                 // Limit array
-                destacados.length = 4
-                setProductosDestacados(destacados);
+                featured.length = 4
+                setFeatured(featured);
                 
                 // Offers
-                let ofertas = array.filter( (e) => e.discount > 0)
+                const ofertas = data.filter( (e) => e.discount > 0);
                 // Limit array
                 ofertas.length = 4
                 setOfertas(ofertas);
@@ -65,8 +69,8 @@ const Home = () => {
                 <Loading />
                 :
                 <>
-                    <ItemsContainer title="Productos Recomendados" array={productosRecomendados} />
-                    <ItemsContainer title="Productos Destacados" array={productosDestacados} />
+                    <ItemsContainer title="Productos Recomendados" array={recommended} />
+                    <ItemsContainer title="Productos Destacados" array={featured} />
                     <ItemsContainer title="Ofertas" array={ofertas} />
                 </>
             }
