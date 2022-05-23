@@ -1,13 +1,13 @@
 // React
 import { useState } from "react";
 
-
 const Filter = ({title, param, array, handleFilter, searchParams}) => {
 
+    // Hide options in mobile
     const [hideOptions, setHideOptions] = useState(true);
 
     return(
-        <div className="flex flex-col my-2 bg-white md:bg-transparent p-2 rounded md:text-left text-center">
+        <div className="flex flex-col my-2 bg-white md:bg-transparent p-2 rounded md:text-left text-center fade">
             <h4 className="text-xl" onClick={() => {setHideOptions(!hideOptions)}}>
                 {title}
             </h4>
@@ -25,13 +25,13 @@ const Filter = ({title, param, array, handleFilter, searchParams}) => {
                     :
                     // Else show options
                     array.map( element =>
-                            (
-                                <li className="my-1 fade" key={element}>
-                                    <span className="cursor-pointer" onClick={ () => {handleFilter(param, element)} }>
-                                    {element}
-                                    </span>
-                                </li>
-                            )
+                        (
+                            <li className="my-1 fade" key={element}>
+                                <span className="cursor-pointer" onClick={ () => {handleFilter(param, element)} }>
+                                {element}
+                                </span>
+                            </li>
+                        )
                     )
                 }
             </ul>

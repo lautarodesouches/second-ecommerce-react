@@ -16,58 +16,46 @@ const Search = () => {
 
     const [ items, setItems ] = useState([]);
     const [ copyItems, setCopyItems ] = useState([]);
+    
     const [ loadign, setLoadign ] = useState(true);
-
+    
+    const [ categories, setCategories] = useState([]);
+    const [ brands, setBrands] = useState([]);
+    
     // Get search params
     let [ searchParams, setSearchParams ] = useSearchParams();
 
-    // Get filters values
-    const [categories, setCategories] = useState([]);
-    const [brands, setBrands] = useState([]);
-    
     const handleFilter = (type, value) => {
-        // If param exist, delete it, else set it
+        // Delete or Set param
         searchParams.get(type) === value ? searchParams.delete(type) : searchParams.set(type, value);
+        // Update params
         setSearchParams(searchParams);
-        filter(copyItems)
+        //
+        filter(copyItems);
     }
 
-    const filter = useCallback((data) => {
+    const filter = useCallback(() => {
         // Get all filters
         let query = searchParams.get('query');
         let category = searchParams.get('category');
         let brand = searchParams.get('brand');
-        // Use filter
-        query && (data = data.filter( e => e.category.toLowerCase().includes(query) || e.brand.toLowerCase().includes(query) || e.name.toLowerCase().includes(query)))
-        category && (data = data.filter( e => e.category === category))
-        brand && (data = data.filter( e => e.brand === brand))
+        // Copy data
+        let data = [...copyItems];
+        // Filter data
+        query && (data = data.filter( e => e.category.toLowerCase().includes(query) || e.brand.toLowerCase().includes(query) || e.name.toLowerCase().includes(query)));
+        category && (data = data.filter( e => e.category === category));
+        brand && (data = data.filter( e => e.brand === brand));
         // Set result
         setItems(data);
-    }, [searchParams])
+    },[copyItems, searchParams])
 
-    // UseEffect for getting filters
+    // Get data
     useEffect(() => {
         (async function () {
-            const querySnapshot = query(collection(db, "products"))
+            const querySnapshot = query(collection(db, "products"));
             return await getDocs(querySnapshot);
         })()
             .then((result) => {
-                // Get unique values for filters
-                const getCategories = new Set(
-                    result.docs.map( (doc) => (
-                            doc.data().category
-                        )
-                    )
-                )
-                setCategories([...getCategories]);
-                const getBrands = new Set(
-                    result.docs.map( (doc) => (
-                            doc.data().brand
-                        )
-                    )
-                )
-                setBrands([...getBrands]);
-
                 // Set Items
                 const data = shuffle(
                     result.docs.map( (doc) => (
@@ -77,17 +65,36 @@ const Search = () => {
                 )
                 setItems(data);
                 setCopyItems(data);
+                
+                setCategories(
+                    [
+                        ...new Set(
+                            data.map( e => e.category)
+                        )
+                    ]
+                );
 
-                // Filter data
-                filter(data);
+                setBrands(
+                    [
+                        ...new Set(
+                            data.map( e => e.brand)
+                        )
+                    ]
+                );
 
                 // Loadign finished
                 setLoadign(false);
+
             })
             .catch((error) => {
                 console.log(error);
             })
-    },[filter])
+    },[]);
+
+    
+    useEffect( () => {
+        filter();
+    }, [filter])
 
     return(
         <>
@@ -100,10 +107,35 @@ const Search = () => {
                     <section className="min-h-screen text-center flex flex-col md:flex-row" >
                         <div id="filtros" className="fade md:w-1/3 text-left pb-5 md:p-4">
                             {
-                                searchParams.get('query') && <Filter title='Busqueda' param='query' array={[searchParams.get('query')]} handleFilter={handleFilter} searchParams={searchParams} />
+                                searchParams.get('query') &&
+                                <Filter
+                                    title='Busqueda'
+                                    param='query'
+                                    array={[searchParams.get('query')]}
+                                    handleFilter={handleFilter}
+                                    searchParams={searchParams}
+                                />
                             }
-                            <Filter title='Categorias' param='category' array={categories} handleFilter={handleFilter} searchParams={searchParams} />
-                            <Filter title='Marcas' param='brand' array={brands} handleFilter={handleFilter} searchParams={searchParams} />
+                            {
+                                categories.length && 
+                                <Filter
+                                    title='Categorias'
+                                    param='category'
+                                    array={categories}
+                                    handleFilter={handleFilter}
+                                    searchParams={searchParams}
+                                />
+                            }
+                            {
+                                brands.length && 
+                                <Filter
+                                    title='Marcas'
+                                    param='brand'
+                                    array={brands}
+                                    handleFilter={handleFilter}
+                                    searchParams={searchParams}
+                                />
+                            }
                         </div>
                         <div id="resultados">
                             {
