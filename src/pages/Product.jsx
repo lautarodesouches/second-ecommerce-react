@@ -12,8 +12,8 @@ import { formatNumber } from "utils/functions";
 const Product = () => {
 
     const [ product, setProduct ] = useState(null);
-    /* const [ images, setImages ] = useState(0); */
     const [ loading, setLoading ] = useState(true);
+    const [ mainImg, setMainImg ] = useState(1);
     
     const { productID } = useParams();
     
@@ -31,6 +31,18 @@ const Product = () => {
             console.log(error);
         })
     }, [productID])
+
+    const getImages = () => {
+        const images = [];
+        for (let index = 1; index < product.availableImages + 1; index++) {
+            images.push(
+                (<div key={index} className="w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 hover:border-blue-700" onClick={() => setMainImg(index)}>
+                    <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${product.id}-${index}.png`} alt={product.name} />
+                </div>)
+            )
+        }
+        return images;
+    }
 
     /*
     
@@ -60,27 +72,18 @@ const Product = () => {
             :
                 product
                 ?
-                <section className="container flex bg-white rounded p-4 my-4">
-                    <div className="p-1 w-3/12 flex text-center">
+                <section className="container flex flex-col md:flex-row bg-white rounded p-4 my-4">
+                    <div className="p-1 w-full md:3/12 flex text-center">
                         <div className="flex flex-col w-1/6 justify-start items-center">
                             {
-                                
+                                getImages()
                             }
-                            <div className="w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 hover:border-blue-700">
-                                <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${product.id}-${1}.png`} alt={product.name} />
-                            </div>
-                            <div className="w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 hover:border-blue-700">
-                                <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${product.id}-${2}.png`} alt={product.name} />
-                            </div>
-                            <div className="w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 hover:border-blue-700">
-                                <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${product.id}-${3}.png`} alt={product.name} />
-                            </div>
                         </div>
                         <div className="w-5/6 self-center">
-                            <img className="w-4/5 m-auto rounded-xl" src={`https://lautarodesouches.github.io/ecommerce/img/${product.id}-${1}.png`} alt={product.name} />
+                            <img className="w-4/5 m-auto rounded-xl" src={`https://lautarodesouches.github.io/ecommerce/img/${product.id}-${mainImg}.png`} alt={product.name} />
                         </div>
                     </div>
-                    <div className="p-1 w-5/12">
+                    <div className="p-1 w-full md:w-w-4/12">
                         <h3 className="text-neutral-500 text-sm text-center">{product.sold} vendedidos</h3>
                         <h2 className="mt-2 text-2xl font-semibold text-center">{product.name}</h2>
                         <div className="my-4"><h3>Estrellas: {product.stars}</h3></div>
@@ -101,7 +104,7 @@ const Product = () => {
                             <p>{product.description}</p>
                         </div>
                     </div>
-                    <div className="p-1 w-4/12">
+                    <div className="p-1 w-full md:w-w-4/12">
                         Order
                     </div>
                 </section>
