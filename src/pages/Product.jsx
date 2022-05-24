@@ -5,14 +5,19 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import db from "utils/firebaseConfig";
 // React Router DOM
 import { useParams } from "react-router-dom";
+// Utils
+import { formatNumber } from "utils/functions";
+// Components
 import Loading from "components/Loading";
 import NotFound from "components/NotFound";
-import { formatNumber } from "utils/functions";
+import Truck from "components/Truck";
+import ArrowDown from "components/ArrowDown";
 
 const Product = () => {
 
     const [ product, setProduct ] = useState(null);
     const [ loading, setLoading ] = useState(true);
+    const [ selectedUnits, setSelectedUnits ] = useState(1);
     const [ mainImg, setMainImg ] = useState(1);
     
     const { productID } = useParams();
@@ -46,20 +51,21 @@ const Product = () => {
 
     /*
     
-    amountAvailable: 95
-    availableColors: (3) ['negro', 'verde', 'blanco']
-    availableImages: 3
-    brand: "Soundpeats"
-    category: "Auriculares"
-    description: "Con el Smart TV UN50AU7000G vas a acceder a las aplicaciones en las que se encuentran tus contenidos favoritos. Además, podés navegar por Internet, interactuar en redes sociales y divertirte con videojuegos."
-    discount: 7
-    freeShipping: false
-    id: 20
-    name: "Auriculares in-ear inalámbricos Soundpeats"
-    opinions: 53
-    price: 5591
-    sold: 337
-    stars: 3.4
+    X availableColors: (3) ['negro', 'verde', 'blanco']
+    X opinions: 53
+    X brand: "Soundpeats"
+    X category: "Auriculares"
+
+    > amountAvailable: 95
+    > availableImages: 3
+    > description: "Con el Smart TV UN50AU7000G vas a acceder a las aplicaciones en las que se encuentran tus contenidos favoritos. Además, podés navegar por Internet, interactuar en redes sociales y divertirte con videojuegos."
+    > discount: 7
+    > freeShipping: false
+    > id: 20
+    > name: "Auriculares in-ear inalámbricos Soundpeats"
+    > price: 5591
+    > sold: 337
+    > stars: 3.4
 
     */
 
@@ -72,8 +78,9 @@ const Product = () => {
             :
                 product
                 ?
-                <section className="container flex flex-col md:flex-row bg-white rounded p-4 my-4">
-                    <div className="p-1 w-full md:3/12 flex text-center">
+                <section className="container flex flex-col md:flex-row bg-white rounded p-4 my-4 text-center w-5/6 m-auto">
+                    { /* --------------------------------- */ }
+                    <div className="flex w-full md:w-3/12 p-2">
                         <div className="flex flex-col w-1/6 justify-start items-center">
                             {
                                 getImages()
@@ -83,10 +90,13 @@ const Product = () => {
                             <img className="w-4/5 m-auto rounded-xl" src={`https://lautarodesouches.github.io/ecommerce/img/${product.id}-${mainImg}.png`} alt={product.name} />
                         </div>
                     </div>
-                    <div className="p-1 w-full md:w-w-4/12">
-                        <h3 className="text-neutral-500 text-sm text-center">{product.sold} vendedidos</h3>
-                        <h2 className="mt-2 text-2xl font-semibold text-center">{product.name}</h2>
-                        <div className="my-4"><h3>Estrellas: {product.stars}</h3></div>
+                    { /* --------------------------------- */ }
+                    <div className="w-full md:w-5/12 p-2">
+                        <div className="flex justify-evenly text-neutral-500 text-sm">
+                            <h3>{product.sold} vendedidos</h3>
+                            <h3>Estrellas: {product.stars}</h3>
+                        </div>
+                        <h2 className="mt-4 text-2xl font-semibold">{product.name}</h2>
                         <div className="mt-4 mb-2">
                             {
                                 product.discount > 0
@@ -99,13 +109,41 @@ const Product = () => {
                                 <h3 className="text-3xl font-light">{formatNumber(product.price)}</h3>
                             }
                         </div>
-                        { product.freeShipping && <h3 className="text-green-600 font-bold">Envio Gratis!</h3>}
-                        <div className="mt-4">
+                        <div className="mt-4 text-left">
                             <p>{product.description}</p>
                         </div>
                     </div>
-                    <div className="p-1 w-full md:w-w-4/12">
-                        Order
+                    { /* --------------------------------- */ }
+                    <div className="w-full md:w-4/12 p-3">
+                        {
+                            product.freeShipping && 
+                            (
+                                <div className="flex justify-center gap-4">
+                                    <Truck prop="fill-green-600 w-6" />
+                                    <h3 className="text-green-600 font-semibold text-lg">Envio Gratis!</h3>
+                                </div>
+                            )
+                        }
+                        <div className="text-left my-4">
+                            {product.sold} ventas
+                        </div>
+                        <div className="mt-6 text-lg cursor-pointer" onClick={() => setSelectedUnits(selectedUnits + 1)}>
+                            Cantidad: {selectedUnits} unidad
+                            {
+                                true
+                                ?
+                                <ArrowDown prop="ml-1 mr-2 w-4 inline fill-blue-700" />
+                                :
+                                <ArrowDown prop="ml-1 mr-2 w-4 inline fill-blue-700" />
+                            }
+                            <span className="text-neutral-500">
+                                {` (${product.amountAvailable} disponible${product.amountAvailable > 1 && 's'})`}
+                            </span>
+                        </div>
+                        <div className="flex mt-10 justify-evenly">
+                            <button className="w-5/12 font-semibold bg-blue-50 hover:bg-blue-100 transition-all duration-500 px-3 py-2 rounded text-blue-600">Agregar al carrito</button>
+                            <button className="w-5/12 font-semibold bg-blue-600 hover:bg-blue-700 transition-all duration-500 px-3 py-2 rounded text-white">Comprar</button>
+                        </div>
                     </div>
                 </section>
                 :
