@@ -36,7 +36,7 @@ const Product = () => {
         const images = [];
         for (let index = 1; index < product.availableImages + 1; index++) {
             images.push(
-                (<div key={index} className="w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 hover:border-blue-700" onClick={() => setMainImg(index)}>
+                (<div key={index} className={`w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${ mainImg === index && 'border-blue-700'}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
                     <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${product.id}-${index}.png`} alt={product.name} />
                 </div>)
             )
