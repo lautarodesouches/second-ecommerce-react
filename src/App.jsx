@@ -16,10 +16,10 @@ import Item from "pages/Item";
 function App() {
   return (
     <BrowserRouter>
-      <header className="container">
+      <header>
         <NavBar />
       </header>
-      <main className="container min-h-screen bg-neutral-200 p-4">
+      <main className="min-h-screen bg-neutral-200 p-4">
         <Routes>
           <Route path={home} element={<Home />} />
           <Route path={categories} element={<Categories />} />

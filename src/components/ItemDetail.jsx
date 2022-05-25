@@ -14,6 +14,26 @@ const ItemDetail = ({item}) => {
     const [mainImg, setMainImg] = useState(1);
     const [selectingUnits, setSelectingUnits] = useState(false);
     const [selectedUnits, setSelectedUnits] = useState(1);
+    
+    /*
+    
+    X availableColors: (3) ['negro', 'verde', 'blanco']
+    X opinions: 53
+    X brand: "Soundpeats"
+    X category: "Auriculares"
+
+    > amountAvailable: 95
+    > availableImages: 3
+    > description: "Con el Smart TV UN50AU7000G vas a acceder a las aplicaciones en las que se encuentran tus contenidos favoritos. Además, podés navegar por Internet, interactuar en redes sociales y divertirte con videojuegos."
+    > discount: 7
+    > freeShipping: false
+    > id: 20
+    > name: "Auriculares in-ear inalámbricos Soundpeats"
+    > price: 5591
+    > sold: 337
+    > stars: 3.4
+
+    */
 
     const getImages = () => {
         const images = [];
@@ -33,10 +53,10 @@ const ItemDetail = ({item}) => {
     }
 
     return(
-        <section className="container flex flex-col md:flex-row bg-white rounded p-4 my-4 text-center md:w-5/6 m-auto">
+        <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center lg:w-5/6 m-auto">
             { /* --------------------------------- */ }
-            <div className="flex w-full md:w-3/12 p-2">
-                <div className="flex flex-col w-1/6 justify-start items-center">
+            <div className="flex w-full md:w-1/2 lg:w-3/12 p-2">
+                <div className="flex flex-col w-1/6 justify-start items-center order-1 md:order-none">
                     {
                         getImages()
                     }
@@ -46,36 +66,34 @@ const ItemDetail = ({item}) => {
                 </div>
             </div>
             { /* --------------------------------- */ }
-            <div className="w-full md:w-5/12 p-2">
-                <div className="flex justify-evenly text-neutral-500 text-sm">
-                    <h3>{item.sold} vendedidos</h3>
-                    <h3>Estrellas: {item.stars}</h3>
-                </div>
-                <h2 className="mt-4 text-2xl font-semibold">{item.name}</h2>
+            <div className="w-full md:w-1/2 lg:w-5/12 p-2">
+                <h2 className="mt-4 text-3xl font-semibold">{item.name}</h2>
                 <div className="mt-4 mb-2">
                     {
                         item.discount > 0
                         ?
                         <>
-                            <h4 className="font-light text-neutral-500 text-sm line-through">{formatNumber(item.price)}</h4>
-                            <h3 className="font-light text-4xl">{formatNumber(Math.round(item.price - item.price * item.discount / 100))} <span className="text-green-600 text-base font-medium">{item.discount + "% OFF"}</span> </h3>
+                            <h4 className="font-light text-neutral-500 line-through">{formatNumber(item.price)}</h4>
+                            <h3 className="font-light text-5xl">{formatNumber(Math.round(item.price - item.price * item.discount / 100))} <span className="text-green-600 text-base font-medium">{item.discount + "% OFF"}</span> </h3>
                         </>
                         :
                         <h3 className="text-3xl font-light">{formatNumber(item.price)}</h3>
                     }
                 </div>
-                <div className="mt-4 text-left">
+                <div className="mt-10 flex">
+                    <h3 className="grow">{item.sold} vendedidos</h3>
+                    <h3 className="grow">Estrellas: {item.stars}</h3>
+                    <h3 className="grow">{item.opinions} opiniones</h3>
+                </div>
+                <div className="mt-10">
                     <p>{item.description}</p>
                 </div>
             </div>
             { /* --------------------------------- */ }
-            <div className="w-full md:w-4/12 p-3">
+            <div className="w-full lg:w-4/12 p-3">
                 {
                     item.freeShipping && <FreeShipping />
                 }
-                <div className="text-left my-4">
-                    {item.sold} ventas
-                </div>
                 <div className="mt-6 text-lg cursor-pointer" onClick={() => handleSelectUnits()}>
                     Cantidad: {selectedUnits} unidad
                     {
