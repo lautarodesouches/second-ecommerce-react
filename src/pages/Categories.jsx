@@ -49,7 +49,7 @@ const Categories = () => {
                 <section className="p-8 grid lg:grid-cols-4 gap-8 md:pt-16">
                     {
                         categories.map(category => (
-                            <Link to={`${search}?category=${category.toLowerCase()}`} key={category} >
+                            <Link to={`${search}?category=${category}`} key={category} >
                                 <div className="fade p-4 text-center text-white bg-sky-700 rounded hover:-translate-y-1 transition-all hover:bg-sky-500">
                                     {category}
                                 </div>

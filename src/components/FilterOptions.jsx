@@ -1,7 +1,11 @@
 // React
 import { useState } from "react";
+// React Router DOM
+import { useSearchParams } from "react-router-dom";
 
-const Filter = ({title, param, array, handleFilter, searchParams}) => {
+const FilterOptions = ({title, param, array, handleFilter}) => {
+
+    let [ searchParams, ] = useSearchParams();
 
     // Hide options in mobile
     const [hideOptions, setHideOptions] = useState(true);
@@ -39,4 +43,4 @@ const Filter = ({title, param, array, handleFilter, searchParams}) => {
     );
 }
 
-export default Filter;
+export default FilterOptions;

@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 // Routes
 import { home } from "routes/Routes";
 // Components
-import Button from "./Button";
+import ButtonPrimary from "./ButtonPrimary";
 
 const NotFound = ({message}) => {
     return(
         <section className="container min-h-screen flex flex-col gap-6 items-center justify-center fade">
             <h2>{message}</h2>
-            <Button>
+            <ButtonPrimary>
                 <Link to={home}>Volver al inicio</Link>
-            </Button>
+            </ButtonPrimary>
         </section>
     );
 }

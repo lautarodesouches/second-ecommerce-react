@@ -1,5 +1,5 @@
 // Components
-import Filter from "components/Filter";
+import FilterOptions from "components/FilterOptions";
 import ItemCard from "components/ItemCard";
 import Loading from "components/Loading";
 // Firebase
@@ -108,32 +108,29 @@ const Search = () => {
                         <div id="filtros" className="fade md:w-1/3 text-left pb-5 md:p-4">
                             {
                                 searchParams.get('query') &&
-                                <Filter
+                                <FilterOptions
                                     title='Busqueda'
                                     param='query'
                                     array={[searchParams.get('query')]}
                                     handleFilter={handleFilter}
-                                    searchParams={searchParams}
                                 />
                             }
                             {
                                 categories.length && 
-                                <Filter
+                                <FilterOptions
                                     title='Categorias'
                                     param='category'
                                     array={categories}
                                     handleFilter={handleFilter}
-                                    searchParams={searchParams}
                                 />
                             }
                             {
                                 brands.length && 
-                                <Filter
+                                <FilterOptions
                                     title='Marcas'
                                     param='brand'
                                     array={brands}
                                     handleFilter={handleFilter}
-                                    searchParams={searchParams}
                                 />
                             }
                         </div>
