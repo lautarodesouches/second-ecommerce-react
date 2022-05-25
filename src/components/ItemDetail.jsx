@@ -8,6 +8,7 @@ import ArrowUp from "./ArrowUp";
 import ButtonPrimary from "./ButtonPrimary";
 import ButtonSecondary from "./ButtonSecondary";
 import FreeShipping from "./FreeShipping";
+import Star from "./Star";
 
 const ItemDetail = ({item}) => {
 
@@ -79,7 +80,11 @@ const ItemDetail = ({item}) => {
                 </div>
                 <div className="mt-10 flex">
                     <h3 className="grow">{item.sold} vendedidos</h3>
-                    <h3 className="grow">Estrellas: {item.stars}</h3>
+                    <div className="grow flex gap-1 justify-center" alt={`${item.stars} estrellas`}>
+                        {
+                            [...Array(4)].map( (undefined, index) => <Star key={index} props='w-4 fill-blue-500' />)
+                        }
+                    </div>
                     <h3 className="grow">{item.opinions} opiniones</h3>
                 </div>
                 <div className="mt-10">
