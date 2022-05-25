@@ -9,9 +9,9 @@ import NavBar from "components/NavBar";
 import Home from "./pages/Home";
 import Categories from "pages/Categories";
 import Offers from "pages/Offers";
-import Product from "pages/Product";
 import Search from "pages/Seach";
 import PageNotFound from "./pages/PageNotFound";
+import Item from "pages/Item";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
           <Route path={home} element={<Home />} />
           <Route path={categories} element={<Categories />} />
           <Route path={offers} element={<Offers />} />
-          <Route path={`${products}:productID`} element={<Product />} />
+          <Route path={`${products}:itemID`} element={<Item />} />
           <Route path={search} element={<Search />} />
           <Route path={pageNotFound} element={<PageNotFound />} />
         </Routes>

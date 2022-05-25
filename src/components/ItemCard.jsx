@@ -9,7 +9,7 @@ const ItemCard = ({id, name, price, freeShipping, discount}) => {
     return(
         <Link to={products + id}>
             <article className="fade h-full bg-white rounded border p-4 transition-all shadow hover:shadow-2xl">
-                <img className="max-w-full max-h-32 m-auto" src={`https://lautarodesouches.github.io/ecommerce/img/${id}-1.png`} alt={name} />
+                <img className="max-w-full max-h-32 m-auto" src={`https://lautarodesouches.github.io/ecommerce/img/${id}-1.png`} alt={name} loading="lazy" />
                 <h3 className={`pt-3 pb-1 ${discount ? "text-slate-500 text-sm line-through" : "text-xl"}`}>{formatNumber(price)}</h3>
                 {
                     // If has discount show new price
@@ -20,7 +20,9 @@ const ItemCard = ({id, name, price, freeShipping, discount}) => {
                     </h3>
                 }
                 <h3>{name}</h3>
-                <h3 className={`pb-1 ${freeShipping && "text-green-600 font-semibold rounded inline-block px-2 py-1 my-3"}`}>{freeShipping && "Envio gratis"}</h3>
+                {
+                    freeShipping && <h3 className='pb-1 text-green-600 font-semibold rounded inline-block px-2 py-1 my-3'>Envio gratis</h3>
+                }
             </article>
         </Link>
     );

@@ -11,7 +11,7 @@ const Filter = ({title, param, array, handleFilter, searchParams}) => {
             <h4 className="text-xl" onClick={() => {setHideOptions(!hideOptions)}}>
                 {title}
             </h4>
-            <ul className={`md:pl-4 pt-2 md:block ${hideOptions && "hidden"}`}>
+            <ul className={`md:pl-4 pt-2 md:block ${hideOptions ? "hidden" : ''}`}>
                 {
                     // If there is a param as filter in url
                     searchParams.get(param) !== null

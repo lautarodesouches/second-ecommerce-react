@@ -1,0 +1,105 @@
+// React
+import { useState } from "react";
+// Utils
+import { formatNumber } from "utils/functions";
+// Components
+import ArrowDown from "./ArrowDown";
+import ArrowUp from "./ArrowUp";
+import ButtonPrimary from "./ButtonPrimary";
+import ButtonSecondary from "./ButtonSecondary";
+import FreeShipping from "./FreeShipping";
+
+const ItemDetail = ({item}) => {
+
+    const [mainImg, setMainImg] = useState(1);
+    const [selectingUnits, setSelectingUnits] = useState(false);
+    const [selectedUnits, setSelectedUnits] = useState(1);
+
+    const getImages = () => {
+        const images = [];
+        for (let index = 1; index < item.availableImages + 1; index++) {
+            images.push(
+                (<div key={index} className={`w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${ mainImg === index ? 'border-blue-700' : ''}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
+                    <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${index}.png`} alt={item.name} />
+                </div>)
+            )
+        }
+        return images;
+    }
+
+    const handleSelectUnits = () => {
+        setSelectingUnits(!selectingUnits);
+        setSelectedUnits(selectedUnits + 1);
+    }
+
+    return(
+        <section className="container flex flex-col md:flex-row bg-white rounded p-4 my-4 text-center md:w-5/6 m-auto">
+            { /* --------------------------------- */ }
+            <div className="flex w-full md:w-3/12 p-2">
+                <div className="flex flex-col w-1/6 justify-start items-center">
+                    {
+                        getImages()
+                    }
+                </div>
+                <div className="w-5/6 self-center">
+                    <img className="w-4/5 m-auto rounded-xl" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${mainImg}.png`} alt={item.name} />
+                </div>
+            </div>
+            { /* --------------------------------- */ }
+            <div className="w-full md:w-5/12 p-2">
+                <div className="flex justify-evenly text-neutral-500 text-sm">
+                    <h3>{item.sold} vendedidos</h3>
+                    <h3>Estrellas: {item.stars}</h3>
+                </div>
+                <h2 className="mt-4 text-2xl font-semibold">{item.name}</h2>
+                <div className="mt-4 mb-2">
+                    {
+                        item.discount > 0
+                        ?
+                        <>
+                            <h4 className="font-light text-neutral-500 text-sm line-through">{formatNumber(item.price)}</h4>
+                            <h3 className="font-light text-4xl">{formatNumber(Math.round(item.price - item.price * item.discount / 100))} <span className="text-green-600 text-base font-medium">{item.discount + "% OFF"}</span> </h3>
+                        </>
+                        :
+                        <h3 className="text-3xl font-light">{formatNumber(item.price)}</h3>
+                    }
+                </div>
+                <div className="mt-4 text-left">
+                    <p>{item.description}</p>
+                </div>
+            </div>
+            { /* --------------------------------- */ }
+            <div className="w-full md:w-4/12 p-3">
+                {
+                    item.freeShipping && <FreeShipping />
+                }
+                <div className="text-left my-4">
+                    {item.sold} ventas
+                </div>
+                <div className="mt-6 text-lg cursor-pointer" onClick={() => handleSelectUnits()}>
+                    Cantidad: {selectedUnits} unidad
+                    {
+                        selectingUnits
+                        ?
+                        <ArrowUp prop="mx-2 w-4 inline fill-white bg-blue-500 rounded" />
+                        :
+                        <ArrowDown prop="mx-2 w-4 inline fill-white bg-blue-500 rounded" />
+                    }
+                    <span className="text-neutral-500">
+                        {` (${item.amountAvailable} disponible${item.amountAvailable > 1 && 's'})`}
+                    </span>
+                </div>
+                <div className="md:flex mt-10 justify-evenly">
+                    <ButtonSecondary whith={'md:w-5/12'} margin={'my-2'}>
+                        Agregar al carrito
+                    </ButtonSecondary>
+                    <ButtonPrimary whith={'md:w-5/12'} margin={'my-2'}>
+                        Comprar Ahora
+                    </ButtonPrimary>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+export default ItemDetail;
