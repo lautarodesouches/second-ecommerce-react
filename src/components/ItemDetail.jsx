@@ -8,6 +8,7 @@ import ArrowUp from "./ArrowUp";
 import ButtonPrimary from "./ButtonPrimary";
 import ButtonSecondary from "./ButtonSecondary";
 import FreeShipping from "./FreeShipping";
+import StarFill from "./StarFill";
 import Star from "./Star";
 
 const ItemDetail = ({item}) => {
@@ -15,6 +16,9 @@ const ItemDetail = ({item}) => {
     const [mainImg, setMainImg] = useState(1);
     const [selectingUnits, setSelectingUnits] = useState(false);
     const [selectedUnits, setSelectedUnits] = useState(1);
+
+    const STARS = Math.round(item.stars);
+    const STAR_CLASS = 'w-4 fill-blue-500';
 
     /*
     
@@ -80,9 +84,13 @@ const ItemDetail = ({item}) => {
                 </div>
                 <div className="mt-10 flex">
                     <h3 className="grow">{item.sold} vendedidos</h3>
-                    <div className="grow flex gap-1 justify-center" alt={`${item.stars} estrellas`}>
+                    {5- STARS}
+                    <div className="grow flex gap-1 justify-center" alt={`${STARS} estrellas`}>
                         {
-                            [...Array(4)].map( (undefined, index) => <Star key={index} props='w-4 fill-blue-500' />)
+                            [...Array(STARS)].map( (undefined, index) => <StarFill key={index} props={STAR_CLASS} />)
+                        }
+                        {
+                            STARS < 5 && [...Array(5 - STARS)].map( (undefined, index) => <Star key={index} props={STAR_CLASS} />)
                         }
                     </div>
                     <h3 className="grow">{item.opinions} opiniones</h3>
