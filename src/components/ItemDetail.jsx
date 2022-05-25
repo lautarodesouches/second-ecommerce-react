@@ -14,7 +14,7 @@ const ItemDetail = ({item}) => {
     const [mainImg, setMainImg] = useState(1);
     const [selectingUnits, setSelectingUnits] = useState(false);
     const [selectedUnits, setSelectedUnits] = useState(1);
-    
+
     /*
     
     X availableColors: (3) ['negro', 'verde', 'blanco']
@@ -35,18 +35,6 @@ const ItemDetail = ({item}) => {
 
     */
 
-    const getImages = () => {
-        const images = [];
-        for (let index = 1; index < item.availableImages + 1; index++) {
-            images.push(
-                (<div key={index} className={`w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${ mainImg === index ? 'border-blue-700' : ''}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
-                    <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${index}.png`} alt={item.name} />
-                </div>)
-            )
-        }
-        return images;
-    }
-
     const handleSelectUnits = () => {
         setSelectingUnits(!selectingUnits);
         setSelectedUnits(selectedUnits + 1);
@@ -58,7 +46,16 @@ const ItemDetail = ({item}) => {
             <div className="flex w-full md:w-1/2 lg:w-3/12 p-2">
                 <div className="flex flex-col w-1/6 justify-start items-center order-1 md:order-none">
                     {
-                        getImages()
+                        [...Array(item.availableImages)].map( (undefined, index) => 
+                            {
+                                index++
+                                return (
+                                    <div key={index} className={`w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${ mainImg === index ? 'border-blue-700' : ''}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
+                                        <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${index}.png`} alt={item.name} />
+                                    </div>
+                                )
+                            }
+                        )
                     }
                 </div>
                 <div className="w-5/6 self-center">
