@@ -46,17 +46,17 @@ const ItemDetail = ({item}) => {
     }
 
     return(
-        <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center lg:w-5/6 m-auto">
+        <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto">
             { /* --------------------------------- */ }
             <div className="flex w-full md:w-1/2 lg:w-3/12 p-2">
-                <div className="flex flex-col w-1/6 justify-start items-center order-1 md:order-none">
+                <div className="flex flex-col w-auto justify-center items-center order-1 md:order-none">
                     {
                         [...Array(item.availableImages)].map( (und, index) => 
                             {
                                 und = 0;
                                 index++;
                                 return (
-                                    <div key={index} className={`w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${ mainImg === index ? 'border-blue-700' : ''}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
+                                    <div key={index} className={`w-12 h-12 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${ mainImg === index ? 'border-blue-700' : ''}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
                                         <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${index}.png`} alt={item.name} />
                                     </div>
                                 )
@@ -64,8 +64,8 @@ const ItemDetail = ({item}) => {
                         )
                     }
                 </div>
-                <div className="w-5/6 self-center">
-                    <img className="w-4/5 m-auto rounded-xl" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${mainImg}.png`} alt={item.name} />
+                <div className="grow self-center">
+                    <img className="m-auto max-h-48 max-w-full rounded-xl" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${mainImg}.png`} alt={item.name} />
                 </div>
             </div>
             { /* --------------------------------- */ }
@@ -77,7 +77,7 @@ const ItemDetail = ({item}) => {
                         ?
                         <>
                             <h4 className="font-light text-neutral-500 line-through">{formatNumber(item.price)}</h4>
-                            <h3 className="font-light text-5xl">{formatNumber(Math.round(item.price - item.price * item.discount / 100))} <span className="text-green-600 text-base font-medium">{item.discount + "% OFF"}</span> </h3>
+                            <h3 className="font-light text-5xl">{formatNumber(item.price - item.price * item.discount / 100)} <span className="text-green-600 text-base font-medium">{item.discount + "% OFF"}</span> </h3>
                         </>
                         :
                         <h3 className="text-3xl font-light">{formatNumber(item.price)}</h3>
