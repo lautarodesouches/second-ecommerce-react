@@ -51,9 +51,10 @@ const ItemDetail = ({item}) => {
             <div className="flex w-full md:w-1/2 lg:w-3/12 p-2">
                 <div className="flex flex-col w-1/6 justify-start items-center order-1 md:order-none">
                     {
-                        [...Array(item.availableImages)].map( (undefined, index) => 
+                        [...Array(item.availableImages)].map( (und, index) => 
                             {
-                                index++
+                                und = 0;
+                                index++;
                                 return (
                                     <div key={index} className={`w-14 h-14 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${ mainImg === index ? 'border-blue-700' : ''}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
                                         <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${index}.png`} alt={item.name} />
@@ -84,13 +85,12 @@ const ItemDetail = ({item}) => {
                 </div>
                 <div className="mt-10 flex">
                     <h3 className="grow">{item.sold} vendedidos</h3>
-                    {5- STARS}
                     <div className="grow flex gap-1 justify-center" alt={`${STARS} estrellas`}>
                         {
-                            [...Array(STARS)].map( (undefined, index) => <StarFill key={index} props={STAR_CLASS} />)
+                            [...Array(STARS)].map( (und, index) => <StarFill key={index} props={STAR_CLASS} und={und} />)
                         }
                         {
-                            STARS < 5 && [...Array(5 - STARS)].map( (undefined, index) => <Star key={index} props={STAR_CLASS} />)
+                            STARS < 5 && [...Array(5 - STARS)].map( (und, index) => <Star key={index} props={STAR_CLASS} und={und} />)
                         }
                     </div>
                     <h3 className="grow">{item.opinions} opiniones</h3>
