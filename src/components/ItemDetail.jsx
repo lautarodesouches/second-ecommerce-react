@@ -9,15 +9,16 @@ import ButtonPrimary from "./ButtonPrimary";
 import ButtonSecondary from "./ButtonSecondary";
 import FreeShipping from "./FreeShipping";
 import StarFill from "./StarFill";
-import Star from "./Star";
+import StarHalf from "./StarHalf";
+import StarEmpty from "./StarEmpty";
 
-const ItemDetail = ({item}) => {
+const ItemDetail = ({ item }) => {
 
     const [mainImg, setMainImg] = useState(1);
     const [selectingUnits, setSelectingUnits] = useState(false);
     const [selectedUnits, setSelectedUnits] = useState(1);
 
-    const STARS = Math.round(item.stars);
+    //const STARS = Math.round(item.stars);
     const STAR_CLASS = 'w-4 fill-blue-500';
 
     /*
@@ -45,22 +46,21 @@ const ItemDetail = ({item}) => {
         setSelectedUnits(selectedUnits + 1);
     }
 
-    return(
+    return (
         <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto">
-            { /* --------------------------------- */ }
+            { /* --------------------------------- */}
             <div className="flex w-full md:w-1/2 lg:w-3/12 p-2">
                 <div className="flex flex-col w-auto justify-center items-center order-1 md:order-none">
                     {
-                        [...Array(item.availableImages)].map( (und, index) => 
-                            {
-                                und = 0;
-                                index++;
-                                return (
-                                    <div key={index} className={`w-12 h-12 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${ mainImg === index ? 'border-blue-700' : ''}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
-                                        <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${index}.png`} alt={item.name} />
-                                    </div>
-                                )
-                            }
+                        [...Array(item.availableImages)].map((und, index) => {
+                            und = 0;
+                            index++;
+                            return (
+                                <div key={index} className={`w-12 h-12 my-1 cursor-pointer rounded border border-neutral-400 p-1 ${mainImg === index ? 'border-blue-700' : ''}`} onClick={() => setMainImg(index)} onMouseEnter={() => setMainImg(index)}>
+                                    <img className="m-auto max-w-full h-full" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${index}.png`} alt={item.name} />
+                                </div>
+                            )
+                        }
                         )
                     }
                 </div>
@@ -68,29 +68,31 @@ const ItemDetail = ({item}) => {
                     <img className="m-auto max-h-48 max-w-full rounded-xl" src={`https://lautarodesouches.github.io/ecommerce/img/${item.id}-${mainImg}.png`} alt={item.name} />
                 </div>
             </div>
-            { /* --------------------------------- */ }
+            { /* --------------------------------- */}
             <div className="w-full md:w-1/2 lg:w-5/12 p-2">
                 <h2 className="mt-4 text-3xl font-semibold">{item.name}</h2>
                 <div className="mt-4 mb-2">
                     {
                         item.discount > 0
-                        ?
-                        <>
-                            <h4 className="font-light text-neutral-500 line-through">{formatNumber(item.price)}</h4>
-                            <h3 className="font-light text-5xl">{formatNumber(item.price - item.price * item.discount / 100)} <span className="text-green-600 text-base font-medium">{item.discount + "% OFF"}</span> </h3>
-                        </>
-                        :
-                        <h3 className="text-3xl font-light">{formatNumber(item.price)}</h3>
+                            ?
+                            <>
+                                <h4 className="font-light text-neutral-500 line-through">{formatNumber(item.price)}</h4>
+                                <h3 className="font-light text-5xl">{formatNumber(item.price - item.price * item.discount / 100)} <span className="text-green-600 text-base font-medium">{item.discount + "% OFF"}</span> </h3>
+                            </>
+                            :
+                            <h3 className="text-3xl font-light">{formatNumber(item.price)}</h3>
                     }
                 </div>
-                <div className="mt-10 flex">
+                <div className="mt-10 flex gap-4 flex-wrap">
                     <h3 className="grow">{item.sold} vendedidos</h3>
-                    <div className="grow flex gap-1 justify-center" alt={`${STARS} estrellas`}>
+                    <div className="grow flex gap-1 justify-center" alt={`${item.stars} estrellas`}>
                         {
-                            [...Array(STARS)].map( (und, index) => <StarFill key={index} props={STAR_CLASS} und={und} />)
+                            item.stars
                         }
                         {
-                            STARS < 5 && [...Array(5 - STARS)].map( (und, index) => <Star key={index} props={STAR_CLASS} und={und} />)
+                            [...Array(5)].map((und, index) =>
+                                item.stars >= index + 1 ? <StarFill key={index} props={STAR_CLASS} /> : ( item.stars <= index ? <StarEmpty key={index} props={STAR_CLASS} /> : <StarHalf key={index} props={STAR_CLASS} /> )
+                            )
                         }
                     </div>
                     <h3 className="grow">{item.opinions} opiniones</h3>
@@ -99,7 +101,7 @@ const ItemDetail = ({item}) => {
                     <p>{item.description}</p>
                 </div>
             </div>
-            { /* --------------------------------- */ }
+            { /* --------------------------------- */}
             <div className="w-full lg:w-4/12 p-3">
                 {
                     item.freeShipping && <FreeShipping />
@@ -108,10 +110,10 @@ const ItemDetail = ({item}) => {
                     Cantidad: {selectedUnits} unidad
                     {
                         selectingUnits
-                        ?
-                        <ArrowUp prop="mx-2 w-4 inline fill-white bg-blue-500 rounded" />
-                        :
-                        <ArrowDown prop="mx-2 w-4 inline fill-white bg-blue-500 rounded" />
+                            ?
+                            <ArrowUp prop="mx-2 w-4 inline fill-white bg-blue-500 rounded" />
+                            :
+                            <ArrowDown prop="mx-2 w-4 inline fill-white bg-blue-500 rounded" />
                     }
                     <span className="text-neutral-500">
                         {` (${item.amountAvailable} disponible${item.amountAvailable > 1 && 's'})`}
