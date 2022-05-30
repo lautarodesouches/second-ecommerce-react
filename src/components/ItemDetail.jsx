@@ -20,26 +20,29 @@ const ItemDetail = ({ item }) => {
     const [selectedUnits, setSelectedUnits] = useState(1);
     const [displaySelectUnits, setDisplaySelectUnits] = useState(false);
     const [color, setColor] = useState(null);
+    const [displayUnitsInput, setDisplayUnitsInput] = useState(false);
 
     const focusSelectUnits = useRef(null);
 
     const STAR_CLASS = 'w-4 fill-blue-500';
 
-    console.log(focusSelectUnits);
-
-    /*
-    
-    X availableColors: (3) ['negro', 'verde', 'blanco']
-    
-    */
-
     const handleShowSelectUnits = () => {
-        displaySelectUnits ? focusSelectUnits.current.focus() : focusSelectUnits.current.blur();
-        setDisplaySelectUnits(!displaySelectUnits);
+        console.log('test');
+        (async () => setDisplaySelectUnits(!displaySelectUnits))()
+            .then(() => {
+                focusSelectUnits.current.focus();
+            })
+    }
+
+    const handleUnitInput = (e) => {
+        e.target.value > 1 && setSelectedUnits(e.target.value);
+        setDisplaySelectUnits(false);
+        setDisplayUnitsInput(false);
     }
 
     const handleSelectUnits = (i) => {
         i < item.amountAvailable && setSelectedUnits(i);
+        setDisplaySelectUnits(!displaySelectUnits);
     }
 
     return (
@@ -104,21 +107,35 @@ const ItemDetail = ({ item }) => {
                 {
                     item.freeShipping && <FreeShipping />
                 }
-                <div className="mt-6 text-lg cursor-pointer relative" onClick={() => handleShowSelectUnits()}>
-                    <h3>
-                        Cantidad: {selectedUnits} unidad
+                <div tabIndex="0" className="mt-6 text-lg cursor-pointer relative" ref={focusSelectUnits} onBlur={() => { displayUnitsInput && setDisplaySelectUnits(false) }}>
+                    <h3 onClick={() => handleShowSelectUnits()}>
+                        Cantidad: <span className={selectedUnits > item.amountAvailable ? 'text-red-500' : 'text-black'}>{selectedUnits}</span> unidad
                         <ArrowDown prop={`mx-2 w-4 inline fill-white bg-blue-500 rounded transition-all transform ${displaySelectUnits ? 'rotate-180' : 'rotate-0'}`} />
                         <span className="text-neutral-500">
                             {` (${item.amountAvailable} disponible${item.amountAvailable > 1 && 's'})`}
                         </span>
                     </h3>
-                    <div tabIndex="0" ref={focusSelectUnits} className={`${displaySelectUnits ? 'visible' : 'hidden'} absolute bg-white border border-solid border-gray-300 w-3/5 left-0 right-0 rounded-sm mx-auto shadow-lg mt-2`} onBlur={() => { setDisplaySelectUnits(false) }}>
+                    <div className={`${displaySelectUnits ? 'visible' : 'hidden'} absolute bg-white border border-solid border-gray-300 w-3/5 left-0 right-0 rounded-sm mx-auto shadow-lg mt-2`}>
                         {
                             [1, 2, 3, 4, 5].map(i =>
-                                <h4 key={i} className={`py-1 border border-solid ${i === selectedUnits ? 'border-blue-700' : 'border-gray-100'} transition-all ${i > item.amountAvailable ? 'text-gray-400 hover:bg-red-200' : 'hover:bg-slate-300'}`} onClick={() => handleSelectUnits(i)}>{i}</h4>
+                                <div
+                                    key={i}
+                                    className={`py-1 border border-solid ${i === selectedUnits ? 'border-blue-700' : 'border-gray-100'} transition-all ${i > item.amountAvailable ? 'text-gray-400 hover:bg-red-200' : 'hover:bg-slate-300'}`}
+                                    onClick={() => handleSelectUnits(i)}>
+                                    <h4>{i}</h4>
+                                </div>
                             )
                         }
-                        <h4 className="py-1 border-b border-solid border-gray-300 hover:bg-slate-300 transition-all" onClick={() => { }}>Mas de 5</h4>
+                        <div className="border-b border-solid border-gray-300 hover:bg-slate-300 transition-all">
+                            <input
+                                className="w-full h-full text-center py-1"
+                                inputMode="numeric"
+                                onChange={(e) => e.target.value > item.amountAvailable ? (e.target.classList.add('bg-red-200')) : (e.target.classList.remove('bg-red-200'))}
+                                onBlur={(e) => handleUnitInput(e)}
+                                onKeyDown={(e) => e.code === 'Enter' && handleUnitInput(e)}
+                                placeholder="6 o más"
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="my-6">
