@@ -2,20 +2,20 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 // Routes
 import { search } from "routes/Routes";
-// Components
-import SeachIcon from "./SearchIcon";
+// Assets
+import SeachIcon from "assets/SearchIcon";
 
-const SearchBar = () => {
+const SearchForm = () => {
 
     let navigate = useNavigate();
 
-    const location = useLocation()
+    const location = useLocation();
 
     // Get search params
     let [ searchParams, setSearchParams ] = useSearchParams();
 
     return(
-        <form className="flex bg-white rounded" onSubmit={(e) => {
+        <form className="flex bg-white rounded h-10" onSubmit={(e) => {
                     e.preventDefault();
                     //
                     if (e.target[0].value != null) {
@@ -38,4 +38,4 @@ const SearchBar = () => {
     );
 }
 
-export default SearchBar;
+export default SearchForm;

@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 // Routes
 import { cart, categories, favourites, home, offers, search } from "routes/Routes";
 // Components
-import CartIcon from "./CartIcon";
-import ChevronDown from "./ChevronDown";
-import ChevronUp from "./ChevronUp";
-import SearchBar from "./SearchBar";
+import CartIcon from "assets/CartIcon";
+import ChevronDown from "assets/ChevronDown";
+import ChevronUp from "assets/ChevronUp";
+import SearchForm from "./SearchForm";
 
 const NavBar = () => {
 
@@ -22,20 +22,22 @@ const NavBar = () => {
 
     return(
         <nav className="bg-sky-700 text-white p-2">
-            <div className="grid grid-cols-3 items-end text-center">
-                <div className="h-full flex items-end justify-center">
+            <div className="flex flex-wrap items-center text-center">
+                <div className="w-1/4 md:w-1/3 h-full flex justify-center">
                     <Link to={home}>
                         <h1 className="text-lg">Titulo</h1>
                     </Link>
                 </div>
-                <SearchBar />
-                <div className="m-auto">
+                <div className="w-2/4 md:w-1/3">
+                    <SearchForm />
+                </div>
+                <div className="w-1/4 md:w-1/3 m-auto">
                     <Link to={cart} >
-                        <CartIcon prop="w-5 fill-white" />
+                        <CartIcon prop="w-5 m-auto fill-white" />
                     </Link>
                 </div>
             </div>
-            <div>
+            <div className="w-full">
                 <div onClick={toggleShowMenu}>
                     {
                         showMenu

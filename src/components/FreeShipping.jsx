@@ -1,4 +1,4 @@
-import Truck from "components/Truck";
+import Truck from "assets/Truck";
 
 const FreeShipping = () => {
     return(

@@ -3,14 +3,15 @@ import { useState } from "react";
 // Utils
 import { formatNumber } from "utils/functions";
 // Components
-import ArrowDown from "./ArrowDown";
-import ArrowUp from "./ArrowUp";
 import ButtonPrimary from "./ButtonPrimary";
 import ButtonSecondary from "./ButtonSecondary";
 import FreeShipping from "./FreeShipping";
-import StarFill from "./StarFill";
-import StarHalf from "./StarHalf";
-import StarEmpty from "./StarEmpty";
+// Assets
+import ArrowDown from "assets/ArrowDown";
+import ArrowUp from "assets/ArrowUp";
+import StarFill from "assets/StarFill";
+import StarHalf from "assets/StarHalf";
+import StarEmpty from "assets/StarEmpty";
 
 const ItemDetail = ({ item }) => {
 
