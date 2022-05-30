@@ -1,54 +1,54 @@
 // React
-import { useState } from "react";
+import { useRef, useState } from "react";
 // Utils
-import { formatNumber } from "utils/functions";
+import { capitalize, formatNumber } from "utils/functions";
 // Components
 import ButtonPrimary from "./ButtonPrimary";
 import ButtonSecondary from "./ButtonSecondary";
 import FreeShipping from "./FreeShipping";
 // Assets
 import ArrowDown from "assets/ArrowDown";
-import ArrowUp from "assets/ArrowUp";
 import StarFill from "assets/StarFill";
 import StarHalf from "assets/StarHalf";
 import StarEmpty from "assets/StarEmpty";
+import { Link } from "react-router-dom";
+import { search } from "routes/Routes";
 
 const ItemDetail = ({ item }) => {
 
     const [mainImg, setMainImg] = useState(1);
-    const [selectingUnits, setSelectingUnits] = useState(false);
     const [selectedUnits, setSelectedUnits] = useState(1);
+    const [displaySelectUnits, setDisplaySelectUnits] = useState(false);
+    const [color, setColor] = useState(null);
 
-    //const STARS = Math.round(item.stars);
+    const focusSelectUnits = useRef(null);
+
     const STAR_CLASS = 'w-4 fill-blue-500';
+
+    console.log(focusSelectUnits);
 
     /*
     
     X availableColors: (3) ['negro', 'verde', 'blanco']
-    X opinions: 53
-    X brand: "Soundpeats"
-    X category: "Auriculares"
-
-    > amountAvailable: 95
-    > availableImages: 3
-    > description: "Con el Smart TV UN50AU7000G vas a acceder a las aplicaciones en las que se encuentran tus contenidos favoritos. Además, podés navegar por Internet, interactuar en redes sociales y divertirte con videojuegos."
-    > discount: 7
-    > freeShipping: false
-    > id: 20
-    > name: "Auriculares in-ear inalámbricos Soundpeats"
-    > price: 5591
-    > sold: 337
-    > stars: 3.4
-
+    
     */
 
-    const handleSelectUnits = () => {
-        setSelectingUnits(!selectingUnits);
-        setSelectedUnits(selectedUnits + 1);
+    const handleShowSelectUnits = () => {
+        displaySelectUnits ? focusSelectUnits.current.focus() : focusSelectUnits.current.blur();
+        setDisplaySelectUnits(!displaySelectUnits);
+    }
+
+    const handleSelectUnits = (i) => {
+        i < item.amountAvailable && setSelectedUnits(i);
     }
 
     return (
         <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto">
+            <div className="w-full text-left">
+                <Link to={`${search}/?category=${item.category}`} >{item.category}</Link>
+                {' > '}
+                <Link to={`${search}/?brand=${item.brand}`} >{item.brand}</Link>
+            </div>
             { /* --------------------------------- */}
             <div className="flex w-full md:w-1/2 lg:w-3/12 p-2">
                 <div className="flex flex-col w-auto justify-center items-center order-1 md:order-none">
@@ -84,15 +84,12 @@ const ItemDetail = ({ item }) => {
                             <h3 className="text-3xl font-light">{formatNumber(item.price)}</h3>
                     }
                 </div>
-                <div className="mt-10 flex gap-4 flex-wrap">
+                <div className="mt-10 flex gap-4 flex-wrap items-center">
                     <h3 className="grow">{item.sold} vendedidos</h3>
-                    <div className="grow flex gap-1 justify-center" alt={`${item.stars} estrellas`}>
-                        {
-                            item.stars
-                        }
+                    <div className="grow flex gap-1 justify-center order-1 md:order-none" alt={`${item.stars} estrellas`}>
                         {
                             [...Array(5)].map((und, index) =>
-                                item.stars >= index + 1 ? <StarFill key={index} props={STAR_CLASS} /> : ( item.stars <= index ? <StarEmpty key={index} props={STAR_CLASS} /> : <StarHalf key={index} props={STAR_CLASS} /> )
+                                item.stars >= index + 1 ? <StarFill key={index} props={STAR_CLASS} /> : (item.stars <= index ? <StarEmpty key={index} props={STAR_CLASS} /> : <StarHalf key={index} props={STAR_CLASS} />)
                             )
                         }
                     </div>
@@ -107,20 +104,34 @@ const ItemDetail = ({ item }) => {
                 {
                     item.freeShipping && <FreeShipping />
                 }
-                <div className="mt-6 text-lg cursor-pointer" onClick={() => handleSelectUnits()}>
-                    Cantidad: {selectedUnits} unidad
-                    {
-                        selectingUnits
-                            ?
-                            <ArrowUp prop="mx-2 w-4 inline fill-white bg-blue-500 rounded" />
-                            :
-                            <ArrowDown prop="mx-2 w-4 inline fill-white bg-blue-500 rounded" />
-                    }
-                    <span className="text-neutral-500">
-                        {` (${item.amountAvailable} disponible${item.amountAvailable > 1 && 's'})`}
-                    </span>
+                <div className="mt-6 text-lg cursor-pointer relative" onClick={() => handleShowSelectUnits()}>
+                    <h3>
+                        Cantidad: {selectedUnits} unidad
+                        <ArrowDown prop={`mx-2 w-4 inline fill-white bg-blue-500 rounded transition-all transform ${displaySelectUnits ? 'rotate-180' : 'rotate-0'}`} />
+                        <span className="text-neutral-500">
+                            {` (${item.amountAvailable} disponible${item.amountAvailable > 1 && 's'})`}
+                        </span>
+                    </h3>
+                    <div tabIndex="0" ref={focusSelectUnits} className={`${displaySelectUnits ? 'visible' : 'hidden'} absolute bg-white border border-solid border-gray-300 w-3/5 left-0 right-0 rounded-sm mx-auto shadow-lg mt-2`} onBlur={() => { setDisplaySelectUnits(false) }}>
+                        {
+                            [1, 2, 3, 4, 5].map(i =>
+                                <h4 key={i} className={`py-1 border border-solid ${i === selectedUnits ? 'border-blue-700' : 'border-gray-100'} transition-all ${i > item.amountAvailable ? 'text-gray-400 hover:bg-red-200' : 'hover:bg-slate-300'}`} onClick={() => handleSelectUnits(i)}>{i}</h4>
+                            )
+                        }
+                        <h4 className="py-1 border-b border-solid border-gray-300 hover:bg-slate-300 transition-all" onClick={() => { }}>Mas de 5</h4>
+                    </div>
                 </div>
-                <div className="md:flex mt-10 justify-evenly">
+                <div className="my-6">
+                    <h3 className="text-lg">Colores disponibles:</h3>
+                    <div className="flex w-2/3 mt-4 mx-auto gap-4">
+                        {
+                            item.availableColors.map(i =>
+                                <span key={i} className={`${i === color ? 'border border-blue-700' : 'bg-white hover:bg-slate-300'} rounded cursor-pointer grow shadow py-1 transition`} onClick={() => setColor(i)}>{capitalize(i)}</span>
+                            )
+                        }
+                    </div>
+                </div>
+                <div className="md:flex mt-8 justify-evenly">
                     <ButtonSecondary whith={'md:w-5/12'} margin={'my-2'}>
                         Agregar al carrito
                     </ButtonSecondary>

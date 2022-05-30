@@ -7,14 +7,11 @@ import { cart, categories, favourites, home, offers, search } from "routes/Route
 // Components
 import CartIcon from "assets/CartIcon";
 import ChevronDown from "assets/ChevronDown";
-import ChevronUp from "assets/ChevronUp";
 import SearchForm from "./SearchForm";
 
 const NavBar = () => {
 
     const [showMenu, setShowMenu] = useState(true);
-
-    const chevronProp = "w-5 md:hidden m-auto pb-2 pt-4 fill-white";
 
     const toggleShowMenu = () => {
         setShowMenu(!showMenu);
@@ -39,13 +36,7 @@ const NavBar = () => {
             </div>
             <div className="w-full">
                 <div onClick={toggleShowMenu}>
-                    {
-                        showMenu
-                        ?
-                        <ChevronDown prop={chevronProp} />
-                        :
-                        <ChevronUp prop={chevronProp} />
-                    }
+                    <ChevronDown prop={`w-5 md:hidden m-auto pb-2 pt-4 fill-white transition-all transform ${ showMenu ? 'rotate-0' : 'rotate-180'}`} />
                 </div>
                 <div className={`${showMenu ? "hidden" : "flex"} md:block md:mt-4`}>
                     <ul className="flex flex-col md:gap-6 items-center md:flex-row justify-center m-auto">
