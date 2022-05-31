@@ -94,7 +94,7 @@ const ItemDetail = ({ item }) => {
                     <div className="grow flex gap-1 justify-center order-1 md:order-none" alt={`${item.stars} estrellas`}>
                         {
                             [...Array(5)].map((und, index) =>
-                                item.stars >= index + 1 ? <StarFill key={index} props={STAR_CLASS} /> : (item.stars <= index ? <StarEmpty key={index} props={STAR_CLASS} /> : <StarHalf key={index} props={STAR_CLASS} />)
+                                item.stars >= index + 1 ? <StarFill key={index} svgClass={STAR_CLASS} /> : (item.stars <= index ? <StarEmpty key={index} svgClass={STAR_CLASS} /> : <StarHalf key={index} svgClass={STAR_CLASS} />)
                             )
                         }
                     </div>

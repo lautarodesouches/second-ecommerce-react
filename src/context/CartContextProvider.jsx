@@ -1,0 +1,42 @@
+// React
+import { createContext, useState } from "react";
+// Context
+export const CartContext = createContext();
+
+const CartContextProvider = ({ children }) => {
+
+    const [cartList, setCartList] = useState(JSON.parse(localStorage.getItem('cartList')) || []);
+
+    const updateAndSaveCart = (data) => {
+        setCartList(data);
+        localStorage.setItem('cart', JSON.stringify(data));
+    }
+
+    const addToCart = (item) => {
+        updateAndSaveCart([...cartList, item]);
+    }
+
+    const removeFromCart = (item) => {
+        updateAndSaveCart(cartList.filter(el => el.id !== item.id));
+    }
+
+    const clearCart = () => {
+        updateAndSaveCart([]);
+    }
+
+    const countItems = () => {
+        return cartList.reduce((acc, item) => acc + item.qty, 0);
+    }
+
+    const cartTotal = () => {
+        return cartList.reduce((acc, item) => acc + (item.price * item.qty), 0);
+    }
+
+    return (
+        <CartContext.Provider value={{ cartList, addToCart, removeFromCart, clearCart, countItems, cartTotal }} >
+            {children}
+        </CartContext.Provider>
+    );
+}
+
+export default CartContextProvider;

@@ -7,17 +7,17 @@ const FavouriteContexProvider = ({children}) => {
 
     const [favourited, setFavourited] = useState(JSON.parse(localStorage.getItem('favourited')) || []);
 
-    const updateFavourited = (data) => {
+    const updateAndSaveFavourited = (data) => {
         setFavourited(data)
         localStorage.setItem('favourited', JSON.stringify(data));
     }
 
     const addFavourite = (item) => {
-        updateFavourited([...favourited, item]);
+        updateAndSaveFavourited([...favourited, item]);
     }
     
     const removeFavourite = (item) => {
-        updateFavourited(favourited.filter( el => el.id !== item.id));
+        updateAndSaveFavourited(favourited.filter( el => el.id !== item.id));
     }
 
     const isInFavourited = (item) => {
