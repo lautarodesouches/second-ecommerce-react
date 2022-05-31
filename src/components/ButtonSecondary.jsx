@@ -1,8 +1,11 @@
-const ButtonSecondary = ({children, whith, margin}) => {
+// Component
+import Button from "./Button";
+
+const ButtonSecondary = ({children, whith, margin, onClick}) => {
     return(
-        <button className={`${whith} ${margin} block m-auto font-semibold bg-blue-50 hover:bg-blue-100 transition-all duration-500 px-3 py-2 rounded text-blue-600`}>
+        <Button onClick={onClick} buttonClass={`${whith} ${margin} bg-blue-50 hover:bg-blue-100 text-blue-600`}>
             {children}
-        </button>
+        </Button>
     );
 }
 

@@ -1,9 +1,11 @@
+// Component
+import Button from "./Button";
 
-const ButtonPrimary = ({children, whith, margin}) => {
+const ButtonPrimary = ({children, whith, margin, onClick}) => {
     return(
-        <button className={`${whith} ${margin} font-semibold bg-blue-600 hover:bg-blue-700 transition-all duration-500 px-3 py-2 rounded text-white`}>
+        <Button onClick={onClick} buttonClass={`${whith} ${margin} bg-blue-600 hover:bg-blue-700 text-white`}>
             {children}
-        </button>
+        </Button>
     );
 }
 

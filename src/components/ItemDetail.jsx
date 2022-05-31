@@ -1,5 +1,5 @@
 // React
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 // Utils
 import { capitalize, formatNumber } from "utils/functions";
 // Components
@@ -15,8 +15,12 @@ import StarEmpty from "assets/StarEmpty";
 import { Link } from "react-router-dom";
 // Routes
 import { search } from "routes/Routes";
+// Context
+import { CartContext } from "context/CartContextProvider";
 
 const ItemDetail = ({ item }) => {
+
+    const { addToCart } = useContext(CartContext);
 
     const [mainImg, setMainImg] = useState(1);
     const [selectedUnits, setSelectedUnits] = useState(1);
@@ -151,10 +155,10 @@ const ItemDetail = ({ item }) => {
                     </div>
                 </div>
                 <div className="md:flex mt-8 justify-evenly">
-                    <ButtonSecondary whith={'md:w-5/12'} margin={'my-2'}>
+                    <ButtonSecondary whith={'md:w-5/12'}>
                         Agregar al carrito
                     </ButtonSecondary>
-                    <ButtonPrimary whith={'md:w-5/12'} margin={'my-2'}>
+                    <ButtonPrimary whith={'md:w-5/12'}>
                         Comprar Ahora
                     </ButtonPrimary>
                 </div>
