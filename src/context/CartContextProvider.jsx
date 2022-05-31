@@ -9,7 +9,7 @@ const CartContextProvider = ({ children }) => {
 
     const updateAndSaveCart = (data) => {
         setCartList(data);
-        localStorage.setItem('cart', JSON.stringify(data));
+        localStorage.setItem('cartList', JSON.stringify(data));
     }
 
     const addToCart = (item) => {
@@ -32,11 +32,11 @@ const CartContextProvider = ({ children }) => {
     }
 
     const countItems = () => {
-        return cartList.reduce((acc, item) => acc + item.qty, 0);
+        return cartList.reduce((acc, item) => acc + item.selectedUnits, 0);
     }
 
     const cartTotal = () => {
-        return cartList.reduce((acc, item) => acc + (item.price * item.qty), 0);
+        return cartList.reduce((acc, item) => acc + (item.price * item.selectedUnits), 0);
     }
 
     return (
