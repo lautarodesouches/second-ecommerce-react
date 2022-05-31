@@ -30,13 +30,13 @@ const NavBar = () => {
                 </div>
                 <div className="w-1/4 md:w-1/3 m-auto">
                     <Link to={cart} >
-                        <CartIcon prop="w-5 m-auto fill-white" />
+                        <CartIcon svgClass="w-5 m-auto fill-white" />
                     </Link>
                 </div>
             </div>
             <div className="w-full">
                 <div onClick={toggleShowMenu}>
-                    <ChevronDown prop={`w-5 md:hidden m-auto pb-2 pt-4 fill-white transition-all transform ${ showMenu ? 'rotate-0' : 'rotate-180'}`} />
+                    <ChevronDown svgClass={`w-5 md:hidden m-auto pb-2 pt-4 fill-white transition-all transform ${ showMenu ? 'rotate-0' : 'rotate-180'}`} />
                 </div>
                 <div className={`${showMenu ? "hidden" : "flex"} md:block md:mt-4`}>
                     <ul className="flex flex-col md:gap-6 items-center md:flex-row justify-center m-auto">

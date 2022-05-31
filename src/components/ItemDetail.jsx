@@ -110,7 +110,7 @@ const ItemDetail = ({ item }) => {
                 <div tabIndex="0" className="mt-6 text-lg cursor-pointer relative" ref={focusSelectUnits} onBlur={() => { displayUnitsInput && setDisplaySelectUnits(false) }}>
                     <h3 onClick={() => handleShowSelectUnits()}>
                         Cantidad: <span className={selectedUnits > item.amountAvailable ? 'text-red-500' : 'text-black'}>{selectedUnits}</span> unidad
-                        <ArrowDown prop={`mx-2 w-4 inline fill-white bg-blue-500 rounded transition-all transform ${displaySelectUnits ? 'rotate-180' : 'rotate-0'}`} />
+                        <ArrowDown svgClass={`mx-2 w-4 inline fill-white bg-blue-500 rounded transition-all transform ${displaySelectUnits ? 'rotate-180' : 'rotate-0'}`} />
                         <span className="text-neutral-500">
                             {` (${item.amountAvailable} disponible${item.amountAvailable > 1 && 's'})`}
                         </span>

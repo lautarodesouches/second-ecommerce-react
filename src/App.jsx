@@ -12,25 +12,29 @@ import Offers from "pages/Offers";
 import Search from "pages/Seach";
 import PageNotFound from "./pages/PageNotFound";
 import Item from "pages/Item";
+// Context
+import FavouriteContexProvider from "context/FavouriteContexProvider";
 
 function App() {
   return (
-    <BrowserRouter>
-      <header>
-        <NavBar />
-      </header>
-      <main className="min-h-screen bg-neutral-200 p-4">
-        <Routes>
-          <Route path={home} element={<Home />} />
-          <Route path={categories} element={<Categories />} />
-          <Route path={offers} element={<Offers />} />
-          <Route path={`${products}:itemID`} element={<Item />} />
-          <Route path={search} element={<Search />} />
-          <Route path={pageNotFound} element={<PageNotFound />} />
-        </Routes>
-      </main>
-      <Footer />
-    </BrowserRouter>
+    <FavouriteContexProvider>
+      <BrowserRouter>
+        <header>
+          <NavBar />
+        </header>
+        <main className="min-h-screen bg-neutral-200 p-4">
+          <Routes>
+            <Route path={home} element={<Home />} />
+            <Route path={categories} element={<Categories />} />
+            <Route path={offers} element={<Offers />} />
+            <Route path={`${products}:itemID`} element={<Item />} />
+            <Route path={search} element={<Search />} />
+            <Route path={pageNotFound} element={<PageNotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </BrowserRouter>
+    </FavouriteContexProvider>
   );
 }
 
