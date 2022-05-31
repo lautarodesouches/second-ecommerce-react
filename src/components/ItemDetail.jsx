@@ -1,7 +1,7 @@
 // React
 import { useContext, useRef, useState } from "react";
 // Utils
-import { capitalize, formatNumber } from "utils/functions";
+import { capitalize, formatNumber, notification } from "utils/functions";
 // Components
 import ButtonPrimary from "./ButtonPrimary";
 import ButtonSecondary from "./ButtonSecondary";
@@ -33,7 +33,6 @@ const ItemDetail = ({ item }) => {
     const STAR_CLASS = 'w-4 fill-blue-500';
 
     const handleShowSelectUnits = () => {
-        console.log('test');
         (async () => setDisplaySelectUnits(!displaySelectUnits))()
             .then(() => {
                 focusSelectUnits.current.focus();
@@ -41,7 +40,7 @@ const ItemDetail = ({ item }) => {
     }
 
     const handleUnitInput = (e) => {
-        e.target.value > 1 && setSelectedUnits(e.target.value);
+        e.target.value > 0 && setSelectedUnits(e.target.value);
         setDisplaySelectUnits(false);
         setDisplayUnitsInput(false);
     }
@@ -51,8 +50,14 @@ const ItemDetail = ({ item }) => {
         setDisplaySelectUnits(!displaySelectUnits);
     }
 
+    const handleAddToCart = () => {
+        selectedUnits < 1 && notification("Por favor, elija un color", "bg-red-500", 4000);
+        !color && notification("Por favor, elija un color", "bg-red-500", 4000);
+        if (selectedUnits && color) addToCart({ ...item, selectedUnits, color });
+    }
+
     return (
-        <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto">
+        <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto fade">
             <div className="w-full text-left">
                 <Link to={`${search}/?category=${item.category}`} >{item.category}</Link>
                 {' > '}
@@ -155,10 +160,10 @@ const ItemDetail = ({ item }) => {
                     </div>
                 </div>
                 <div className="md:flex mt-8 justify-evenly">
-                    <ButtonSecondary whith={'md:w-5/12'}>
+                    <ButtonSecondary whith={'md:w-5/12'} onClick={handleAddToCart}>
                         Agregar al carrito
                     </ButtonSecondary>
-                    <ButtonPrimary whith={'md:w-5/12'}>
+                    <ButtonPrimary whith={'md:w-5/12'} onClick={handleAddToCart}>
                         Comprar Ahora
                     </ButtonPrimary>
                 </div>
