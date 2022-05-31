@@ -7,10 +7,13 @@ import { formatNumber } from "utils/functions";
 // Components
 import FavouriteIcon from "./FavouriteIcon";
 
-const ItemCard = ({ id, name, price, freeShipping, discount }) => {
+const ItemCard = ({ item }) => {
+
+    const {id, name, price, freeShipping, discount} = item;
+
     return (
-        <article className="fade h-full bg-white rounded border p-4 transition-all shadow hover:shadow-2xl relative">
-            <FavouriteIcon id={id} />
+        <article className="fade bg-white rounded border px-4 py-8 transition-all shadow hover:shadow-2xl relative">
+            <FavouriteIcon item={item} />
             {/* ------------------------------ */}
             <Link to={products + id}>
                 <img className="max-w-full max-h-32 m-auto" src={`https://lautarodesouches.github.io/ecommerce/img/${id}-1.png`} alt={name} loading="lazy" />

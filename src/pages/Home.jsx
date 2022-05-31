@@ -53,6 +53,8 @@ const Home = () => {
                 ofertas.length = 4
                 setOfertas(ofertas);
 
+                console.log(ofertas);
+
                 // Loading finished
                 setLoading(false);
             })
@@ -69,9 +71,9 @@ const Home = () => {
                 <Loading />
                 :
                 <>
-                    <ItemsContainer title="Productos Recomendados" array={recommended} />
-                    <ItemsContainer title="Productos Destacados" array={featured} />
-                    <ItemsContainer title="Ofertas" array={ofertas} />
+                    <ItemsContainer title="Productos Recomendados" items={recommended} />
+                    <ItemsContainer title="Productos Destacados" items={featured} />
+                    <ItemsContainer title="Ofertas" items={ofertas} />
                 </>
             }
         </>

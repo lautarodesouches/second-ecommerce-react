@@ -46,7 +46,7 @@ const Offers = () => {
                 ?
                 <Loading />
                 :
-                <ItemsContainer title="Ofertas" array={items} />
+                <ItemsContainer title="Ofertas" items={items} />
             }
         </>
     );

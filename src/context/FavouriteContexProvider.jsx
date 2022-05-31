@@ -12,20 +12,20 @@ const FavouriteContexProvider = ({children}) => {
         localStorage.setItem('favourited', JSON.stringify(data));
     }
 
-    const addFavourite = (id) => {
-        updateFavourited([...favourited, id]);
+    const addFavourite = (item) => {
+        updateFavourited([...favourited, item]);
     }
     
-    const removeFavourite = (id) => {
-        updateFavourited(favourited.filter( el => el !== id));
+    const removeFavourite = (item) => {
+        updateFavourited(favourited.filter( el => el.id !== item.id));
     }
 
-    const isInFavourited = (id) => {
-        return favourited.find( el => el === id) !== undefined;
+    const isInFavourited = (item) => {
+        return favourited.find( el => el.id === item.id) !== undefined;
     }
 
-    const handleFavourite = (id) => {
-        isInFavourited(id) ? removeFavourite(id) : addFavourite(id);
+    const handleFavourite = (item) => {
+        isInFavourited(item) ? removeFavourite(item) : addFavourite(item);
     }
 
     return(

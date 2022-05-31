@@ -11,7 +11,9 @@ import ArrowDown from "assets/ArrowDown";
 import StarFill from "assets/StarFill";
 import StarHalf from "assets/StarHalf";
 import StarEmpty from "assets/StarEmpty";
+// React Router DOM
 import { Link } from "react-router-dom";
+// Routes
 import { search } from "routes/Routes";
 
 const ItemDetail = ({ item }) => {

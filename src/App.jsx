@@ -1,7 +1,7 @@
 // React Router DOM
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Routes
-import { categories, home, offers, pageNotFound, products, search } from "routes/Routes";
+import { categories, favourites, home, offers, pageNotFound, products, search } from "routes/Routes";
 // Components
 import Footer from "components/Footer";
 import NavBar from "components/NavBar";
@@ -9,6 +9,7 @@ import NavBar from "components/NavBar";
 import Home from "./pages/Home";
 import Categories from "pages/Categories";
 import Offers from "pages/Offers";
+import Favourites from "pages/Favourites";
 import Search from "pages/Seach";
 import PageNotFound from "./pages/PageNotFound";
 import Item from "pages/Item";
@@ -27,6 +28,7 @@ function App() {
             <Route path={home} element={<Home />} />
             <Route path={categories} element={<Categories />} />
             <Route path={offers} element={<Offers />} />
+            <Route path={favourites} element={<Favourites />} />
             <Route path={`${products}:itemID`} element={<Item />} />
             <Route path={search} element={<Search />} />
             <Route path={pageNotFound} element={<PageNotFound />} />
