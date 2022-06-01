@@ -51,9 +51,12 @@ const ItemDetail = ({ item }) => {
     }
 
     const handleAddToCart = () => {
-        selectedUnits < 1 && notification("Por favor, elija un color", "bg-red-500", 4000);
-        !color && notification("Por favor, elija un color", "bg-red-500", 4000);
-        if (selectedUnits && color) addToCart({ ...item, selectedUnits, color });
+        selectedUnits < 1 && notification("La cantidad debe ser mayor a uno", "bg-red-500");
+        !color && notification("Por favor, elija un color", "bg-red-500");
+        if (selectedUnits && color) {
+            addToCart({ ...item, selectedUnits, color });
+            notification(`Se ha agregadon ${selectedUnits} unidades de ${item.name} a la canasta`, 'bg-blue-500')
+        }
     }
 
     return (
