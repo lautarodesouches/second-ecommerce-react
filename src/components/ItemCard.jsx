@@ -9,7 +9,7 @@ import FavouriteIcon from "./FavouriteIcon";
 
 const ItemCard = ({ item }) => {
 
-    const {id, name, price, freeShipping, discount} = item;
+    const { id, name, price, freeShipping, discount } = item;
 
     return (
         <article className="fade bg-white rounded border px-4 py-8 transition-all shadow hover:shadow-2xl relative">

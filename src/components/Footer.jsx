@@ -7,7 +7,7 @@ const Footer = () => {
 
     const year = new Date().getFullYear();
 
-    return(
+    return (
         <footer className="bg-sky-700 text-white flex justify-around py-1">
             <div>
                 <Link to={home}>Contacto</Link>

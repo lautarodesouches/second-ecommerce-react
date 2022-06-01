@@ -5,8 +5,8 @@ import { home } from "routes/Routes";
 // Components
 import ButtonPrimary from "./ButtonPrimary";
 
-const NotFound = ({message}) => {
-    return(
+const NotFound = ({ message }) => {
+    return (
         <section className="container min-h-screen flex flex-col gap-6 items-center justify-center fade">
             <h2 className="text-2xl">{message}</h2>
             <ButtonPrimary>

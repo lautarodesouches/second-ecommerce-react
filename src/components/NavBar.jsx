@@ -17,7 +17,7 @@ const NavBar = () => {
         setShowMenu(!showMenu);
     }
 
-    return(
+    return (
         <nav className="bg-sky-700 text-white p-2">
             <div className="flex flex-wrap items-center text-center">
                 <div className="w-1/4 md:w-1/3 h-full flex justify-center">
@@ -36,7 +36,7 @@ const NavBar = () => {
             </div>
             <div className="w-full">
                 <div onClick={toggleShowMenu}>
-                    <ChevronDown svgClass={`w-5 md:hidden m-auto pb-2 pt-4 fill-white transition-all transform ${ showMenu ? 'rotate-0' : 'rotate-180'}`} />
+                    <ChevronDown svgClass={`w-5 md:hidden m-auto pb-2 pt-4 fill-white transition-all transform ${showMenu ? 'rotate-0' : 'rotate-180'}`} />
                 </div>
                 <div className={`${showMenu ? "hidden" : "flex"} md:block md:mt-4`}>
                     <ul className="flex flex-col md:gap-6 items-center md:flex-row justify-center m-auto">
