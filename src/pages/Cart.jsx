@@ -33,7 +33,7 @@ const Cart = () => {
                 </section>
                 <section className="flex flex-col gap-4 mt-8">
                     {
-                        cartList.map(el => <CartItem item={el} removeFromCart={removeFromCart} />)
+                        cartList.map(el => <CartItem key={el.id} item={el} removeFromCart={removeFromCart} />)
                     }
                 </section>
                 <section className="sm:w-1/2 mt-10 m-auto">

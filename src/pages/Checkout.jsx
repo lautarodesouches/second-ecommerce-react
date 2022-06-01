@@ -58,7 +58,7 @@ const Checkout = () => {
             await getDocs(querySnapshot).then(res => docId = res.docs[0].id);
             // Update
             const itemRef = doc(db, "products", docId);
-            await updateDoc(itemRef, { amountAvailable: increment(- item.qty) });
+            await updateDoc(itemRef, { amountAvailable: increment(- item.selectedUnits) });
         });
 
         // Create new order in firebase
@@ -76,7 +76,7 @@ const Checkout = () => {
             .catch(error => {
                 setFormIncomplete(false);
                 setError(error);
-                console.log(error);
+                console.log(error, 'error');
             });
 
     }
