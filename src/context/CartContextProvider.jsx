@@ -32,7 +32,7 @@ const CartContextProvider = ({ children }) => {
     }
 
     const countItems = () => {
-        return cartList.reduce((acc, item) => acc + item.selectedUnits, 0);
+        return cartList.length;
     }
 
     const cartTotal = () => {

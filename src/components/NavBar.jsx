@@ -3,11 +3,12 @@ import { useState } from "react";
 // React Router DOM
 import { Link } from "react-router-dom";
 // Routes
-import { cart, categories, favourites, home, offers, search } from "routes/Routes";
+import { categories, favourites, home, offers, search } from "routes/Routes";
 // Components
-import CartIcon from "assets/CartIcon";
-import ChevronDown from "assets/ChevronDown";
 import SearchForm from "./SearchForm";
+import CartWidget from "./CartWidget";
+// Assets
+import ChevronDown from "assets/ChevronDown";
 
 const NavBar = () => {
 
@@ -29,9 +30,7 @@ const NavBar = () => {
                     <SearchForm />
                 </div>
                 <div className="w-1/4 md:w-1/3 m-auto">
-                    <Link to={cart} >
-                        <CartIcon svgClass="w-5 m-auto fill-white" />
-                    </Link>
+                    <CartWidget />
                 </div>
             </div>
             <div className="w-full">
