@@ -9,8 +9,6 @@ const Favourites = () => {
 
     const { favourited } = useContext(FavouriteContex);
 
-    // If the price is different in the database, update
-
     return (
         <>
             {

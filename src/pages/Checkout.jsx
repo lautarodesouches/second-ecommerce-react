@@ -1,7 +1,7 @@
 // Components
 import CheckoutForm from "components/CheckoutForm";
-import Error from "components/Error";
 import Thankyou from "components/Thankyou";
+import Error from "components/Error";
 // Context
 import { CartContext } from "context/CartContextProvider";
 // Firebase
@@ -13,8 +13,8 @@ import db from "utils/firebaseConfig";
 
 const Checkout = () => {
 
-    const {cartList, clear, cartTotal} = useContext(CartContext);
-    
+    const { cartList, clearCart, cartTotal } = useContext(CartContext);
+
     const [formInomplete, setFormIncomplete] = useState(true);
     const [formOk, setFormOk] = useState(false);
     const [buyerName, setBuyerName] = useState("");
@@ -24,7 +24,7 @@ const Checkout = () => {
     const createOrder = (e) => {
 
         e.preventDefault();
-        
+
         const inputValue = (n) => {
             return e.target.children[n].children[1].value;
         }
@@ -39,26 +39,26 @@ const Checkout = () => {
                 phone: inputValue(2)
             },
             total: cartTotal(),
-            items: cartList.map( item => ({
+            items: cartList.map(item => ({
                 id: item.id,
                 name: item.name,
                 brand: item.brand,
                 price: item.price,
                 qty: item.selectedUnits,
                 color: item.color,
-              })),
+            })),
             date: serverTimestamp()
         }
-        
+
         // Update stock
         cartList.forEach(async (item) => {
             // Get item doc by id
             let docId;
-            const querySnapshot = query(collection(db, "products"), where("id", "==", item.id ));
-            await getDocs(querySnapshot).then( res => docId = res.docs[0].id);
+            const querySnapshot = query(collection(db, "products"), where("id", "==", item.id));
+            await getDocs(querySnapshot).then(res => docId = res.docs[0].id);
             // Update
             const itemRef = doc(db, "products", docId);
-            await updateDoc(itemRef, { amountAvailable: increment( - item.qty) });
+            await updateDoc(itemRef, { amountAvailable: increment(- item.qty) });
         });
 
         // Create new order in firebase
@@ -67,17 +67,17 @@ const Checkout = () => {
             await setDoc(newOrderRef, order);
             return newOrderRef;
         })()
-        .then( result => {
-            setFormOk(true);
-            setFormIncomplete(false);
-            setOrderId(result.id);
-            clear();
-        })
-        .catch( error => {
-            setFormIncomplete(false);
-            setError(error);
-            console.log(error);
-        });
+            .then(result => {
+                setFormOk(true);
+                setFormIncomplete(false);
+                setOrderId(result.id);
+                clearCart();
+            })
+            .catch(error => {
+                setFormIncomplete(false);
+                setError(error);
+                console.log(error);
+            });
 
     }
 
@@ -85,16 +85,16 @@ const Checkout = () => {
         <section className="sm:w-1/3 mt-10 mx-auto">
             {
                 formInomplete
-                ?
-                <CheckoutForm createOrder={createOrder} />
-                :
-                (
-                    formOk
                     ?
-                    <Thankyou buyerName={buyerName} orderId={orderId} />
+                    <CheckoutForm createOrder={createOrder} />
                     :
-                    <Error message={error} />
-                )
+                    (
+                        formOk
+                            ?
+                            <Thankyou buyerName={buyerName} orderId={orderId} />
+                            :
+                            <Error message={error} />
+                    )
             }
         </section>
     );

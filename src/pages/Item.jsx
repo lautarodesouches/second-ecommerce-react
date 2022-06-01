@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 // Firebase
 import { collection, getDocs, query, where } from "firebase/firestore";
+// Utils
 import db from "utils/firebaseConfig";
 // React Router DOM
 import { useParams } from "react-router-dom";
