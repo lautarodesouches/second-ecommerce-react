@@ -1,7 +1,7 @@
 // React Router DOM
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // Routes
-import { cart, categories, favourites, home, offers, pageNotFound, products, search } from "routes/Routes";
+import { cart, categories, checkout, favourites, home, offers, pageNotFound, products, search } from "routes/Routes";
 // Components
 import Footer from "components/Footer";
 import NavBar from "components/NavBar";
@@ -17,6 +17,7 @@ import Cart from "pages/Cart";
 // Context
 import FavouriteContexProvider from "context/FavouriteContexProvider";
 import CartContextProvider from "context/CartContextProvider";
+import Checkout from "pages/Checkout";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               <Route path={`${products}:itemID`} element={<Item />} />
               <Route path={search} element={<Search />} />
               <Route path={cart} element={<Cart />} />
+              <Route path={checkout} element={<Checkout />} />
               <Route path={pageNotFound} element={<PageNotFound />} />
             </Routes>
           </main>

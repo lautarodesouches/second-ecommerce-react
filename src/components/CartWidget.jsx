@@ -14,7 +14,7 @@ const CartWidget = () => {
     const { countItems } = useContext(CartContext);
 
     return (
-        <Link to={cart} className="flex items-center justify-center relative" >
+        <Link to={cart} className="flex items-center justify-center relative mx-auto w-max" >
             <CartIcon svgClass="w-5 m-2 fill-white" />
             {
                 countItems() > 0 && <span className="rounded-full bg-red-500 px-2 absolute mb-7 ml-7">{countItems()}</span>
