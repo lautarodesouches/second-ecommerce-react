@@ -12,9 +12,9 @@ import StarFill from "assets/StarFill";
 import StarHalf from "assets/StarHalf";
 import StarEmpty from "assets/StarEmpty";
 // React Router DOM
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 // Routes
-import { search } from "routes/Routes";
+import { cart, search } from "routes/Routes";
 // Context
 import { CartContext } from "context/CartContextProvider";
 
@@ -27,6 +27,8 @@ const ItemDetail = ({ item }) => {
     const [displaySelectUnits, setDisplaySelectUnits] = useState(false);
     const [color, setColor] = useState(null);
     const [displayUnitsInput, setDisplayUnitsInput] = useState(false);
+    // Redirec if user selects "buy now"
+    const [redirect, setRedirect] = useState(false);
 
     const focusSelectUnits = useRef(null);
 
@@ -50,13 +52,20 @@ const ItemDetail = ({ item }) => {
         setDisplaySelectUnits(!displaySelectUnits);
     }
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (redirect) => {
+        // Quantity warning
         selectedUnits < 1 && notification("La cantidad debe ser mayor a uno", "bg-red-500");
+        // Color unselected
         !color && notification("Por favor, elija un color", "bg-red-500");
+        // All selected OK
         if (selectedUnits && color) {
+            // Add item
             addToCart({ ...item, selectedUnits, color });
-            notification(`Se ha agregadon ${selectedUnits} unidades de ${item.name} a la canasta`, 'bg-blue-500')
+            // Add to cart display confirmation message
+            !redirect && notification(`Se ${selectedUnits > 1 ? 'agregaron' : 'agrego'} ${selectedUnits} ${item.name} al carrito`, 'bg-blue-500');
         }
+        // If user selects "buy now" set redirect true to redirect to cart
+        setRedirect(redirect);
     }
 
     return (
@@ -163,14 +172,18 @@ const ItemDetail = ({ item }) => {
                     </div>
                 </div>
                 <div className="md:flex mt-8 justify-evenly">
-                    <ButtonSecondary whith={'md:w-5/12'} onClick={handleAddToCart}>
+                    <ButtonSecondary whith={'md:w-5/12'} onClick={() => handleAddToCart(false)}>
                         Agregar al carrito
                     </ButtonSecondary>
-                    <ButtonPrimary whith={'md:w-5/12'} onClick={handleAddToCart}>
+                    <ButtonPrimary whith={'md:w-5/12'} onClick={() => handleAddToCart(true)}>
                         Comprar Ahora
                     </ButtonPrimary>
                 </div>
             </div>
+            {
+                // Buy now action
+                redirect && <Navigate to={cart} />
+            }
         </section>
     );
 }
