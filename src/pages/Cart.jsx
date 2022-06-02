@@ -1,9 +1,9 @@
 // Components
+import Error from "components/Error";
 import Button from "components/Button";
+import CartItem from "components/CartItem";
 import ButtonGray from "components/ButtonGray";
 import ButtonPrimary from "components/ButtonPrimary";
-import CartItem from "components/CartItem";
-import NotFound from "components/NotFound";
 // Context
 import { CartContext } from "context/CartContextProvider";
 // React
@@ -23,11 +23,12 @@ const Cart = () => {
         cartList.length > 0
             ?
             <div className="sm:w-11/12 m-auto mt-4 text-center fade">
-                <section className="flex flex-col sm:flex-row justify-around">
-                    <Link to={home} className='w-5/6 m-auto sm:w-1/5'>
+                <section className="sm:flex">
+                    <Link to={home} className='grow'>
                         <ButtonGray>Seguir comprando</ButtonGray>
                     </Link>
-                    <Button onClick={clearCart} buttonClass={'w-5/6 m-auto sm:w-1/5 border border-solid border-red-500 text-red-500 hover:bg-red-500 hover:text-white'}>
+                    <div className="grow"></div>
+                    <Button onClick={clearCart} buttonClass={'border border-solid border-red-500 text-red-500 hover:bg-red-500 hover:text-white'}>
                         Eliminar Items
                     </Button>
                 </section>
@@ -46,7 +47,7 @@ const Cart = () => {
                 </section>
             </div>
             :
-            <NotFound message='El carrito se encuentra vacio' />
+            <Error error={{ message: 'El carrito se encuentra vacio', home: true}} />
     );
 }
 

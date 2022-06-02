@@ -16,7 +16,7 @@ const CheckoutForm = ({ createOrder }) => {
                 <input type="tel" className="border border-gray-300 rounded mt-2 p-1 block w-full" id="phone" aria-describedby="phone" required />
             </div>
             <div className="w-2/3 m-auto mt-4">
-                <ButtonPrimary whith='w-full' >
+                <ButtonPrimary>
                     Submit
                 </ButtonPrimary>
             </div>

@@ -7,13 +7,11 @@ import ButtonPrimary from "./ButtonPrimary";
 
 const HomeButton = () => {
     return (
-        <div>
-            <Link to={home} className="w-full" >
-                <ButtonPrimary whith="w-full">
-                    Volver al inicio
-                </ButtonPrimary>
-            </Link>
-        </div>
+        <Link to={home} className="grow" >
+            <ButtonPrimary>
+                Volver al inicio
+            </ButtonPrimary>
+        </Link>
     );
 }
 

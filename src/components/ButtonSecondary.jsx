@@ -1,9 +1,9 @@
 // Component
 import Button from "./Button";
 
-const ButtonSecondary = ({ children, whith, margin, onClick }) => {
+const ButtonSecondary = ({ children, onClick }) => {
     return (
-        <Button onClick={onClick} buttonClass={`${whith} ${margin} bg-blue-50 hover:bg-blue-100 text-blue-600`}>
+        <Button buttonClass={`bg-blue-50 hover:bg-blue-100 text-blue-600`} onClick={onClick}>
             {children}
         </Button>
     );

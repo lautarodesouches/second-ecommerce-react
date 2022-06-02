@@ -163,7 +163,7 @@ const ItemDetail = ({ item }) => {
                 </div>
                 <div className="my-6">
                     <h3 className="text-lg">Colores disponibles:</h3>
-                    <div className="flex w-2/3 mt-4 mx-auto gap-4">
+                    <div className="flex sm:w-2/3 mt-4 mx-auto gap-4">
                         {
                             item.availableColors.map(i =>
                                 <span key={i} className={`${i === color ? 'border border-blue-700' : 'bg-white hover:bg-slate-300'} rounded cursor-pointer grow shadow py-1 transition`} onClick={() => setColor(i)}>{capitalize(i)}</span>
@@ -172,10 +172,10 @@ const ItemDetail = ({ item }) => {
                     </div>
                 </div>
                 <div className="md:flex mt-8 justify-evenly">
-                    <ButtonSecondary whith={'md:w-5/12'} onClick={() => handleAddToCart(false)}>
+                    <ButtonSecondary onClick={() => handleAddToCart(false)}>
                         Agregar al carrito
                     </ButtonSecondary>
-                    <ButtonPrimary whith={'md:w-5/12'} onClick={() => handleAddToCart(true)}>
+                    <ButtonPrimary onClick={() => handleAddToCart(true)}>
                         Comprar Ahora
                     </ButtonPrimary>
                 </div>

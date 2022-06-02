@@ -1,7 +1,7 @@
 // Components
-import CheckoutForm from "components/CheckoutForm";
-import Thankyou from "components/Thankyou";
 import Error from "components/Error";
+import Thankyou from "components/Thankyou";
+import CheckoutForm from "components/CheckoutForm";
 // Context
 import { CartContext } from "context/CartContextProvider";
 // Firebase
@@ -15,11 +15,11 @@ const Checkout = () => {
 
     const { cartList, clearCart, cartTotal } = useContext(CartContext);
 
-    const [formInomplete, setFormIncomplete] = useState(true);
+    const [orderId, setOrderId] = useState("");
     const [formOk, setFormOk] = useState(false);
     const [buyerName, setBuyerName] = useState("");
-    const [orderId, setOrderId] = useState("");
-    const [error, setError] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [formInomplete, setFormIncomplete] = useState(true);
 
     const createOrder = (e) => {
 
@@ -75,8 +75,7 @@ const Checkout = () => {
             })
             .catch(error => {
                 setFormIncomplete(false);
-                setError(error);
-                console.log(error, 'error');
+                setErrorMessage(error.message);
             });
 
     }
@@ -93,7 +92,7 @@ const Checkout = () => {
                             ?
                             <Thankyou buyerName={buyerName} orderId={orderId} />
                             :
-                            <Error message={error} />
+                            <Error error={{ message: errorMessage, home: true, reload:true}} />
                     )
             }
         </section>

@@ -1,9 +1,10 @@
 // Components
-import NotFound from "components/NotFound";
+import Error from "components/Error";
 
 const PageNotFound = () => {
+
     return (
-        <NotFound message="No se ha encontrado la página" />
+        <Error error={{ message: 'No se ha encontrado la página', number: 404 }} />
     );
 }
 

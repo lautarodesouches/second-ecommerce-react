@@ -1,5 +1,6 @@
 // Utils
 import { formatNumber } from "utils/functions";
+import ButtonContainer from "./ButtonContainer";
 import ButtonGray from "./ButtonGray";
 // Components
 import CartItem from "./CartItem";
@@ -15,14 +16,10 @@ const OrdersResult = ({ cartList, cartTotal, setFormCompleted }) => {
                 })
             }
             <h5 className="text-xl">Total: {formatNumber(cartTotal)}</h5>
-            <div className="w-1/3 m-auto flex gap-8 justify-around">
-                <div className="w-1/2">
-                    <ButtonGray onClick={() => setFormCompleted(false)}>Buscar otra orden</ButtonGray>
-                </div>
-                <div className="w-1/2">
-                    <HomeButton />
-                </div>
-            </div>
+            <ButtonContainer>
+                <ButtonGray onClick={() => setFormCompleted(false)}>Buscar otra orden</ButtonGray>
+                <HomeButton />
+            </ButtonContainer>
         </div>
     );
 }

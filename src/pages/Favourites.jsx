@@ -2,8 +2,9 @@
 import { useContext } from "react";
 // Context
 import { FavouriteContex } from "context/FavouriteContexProvider";
+// Components
 import ItemsContainer from "components/ItemsContainer";
-import NotFound from "components/NotFound";
+import Error from "components/Error";
 
 const Favourites = () => {
 
@@ -16,7 +17,7 @@ const Favourites = () => {
                     ?
                     <ItemsContainer title='Favoritos' items={favourited} />
                     :
-                    <NotFound message='No se encontraron favoritos' />
+                    <Error error={{ message: 'No se encontraron favoritos', home: true}} />
             }
         </>
     );

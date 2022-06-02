@@ -1,24 +1,24 @@
 // Components
 import Error from "components/Error";
-import OrdersResult from "components/OrdersResult";
 import Loading from "components/Loading";
 import OrdersForm from "components/OrdersForm";
+import OrdersResult from "components/OrdersResult";
 // React
 import { useState } from "react";
 // Utils
 import db from "utils/firebaseConfig";
-// Firebase
-import { doc, getDoc } from "firebase/firestore";
 // Functions
 import { useParams } from "react-router-dom";
+// Firebase
+import { doc, getDoc } from "firebase/firestore";
 
 const Orders = () => {
 
-    const [formCompleted, setFormCompleted] = useState(false);
-    const [error, setError] = useState(undefined);
+    const [loading, setLoading] = useState(true);
     const [cartList, setCartList] = useState([]);
     const [cartTotal, setCartTotal] = useState(0);
-    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [formCompleted, setFormCompleted] = useState(false);
 
     const orderId = useParams().orderId;
 
@@ -27,26 +27,24 @@ const Orders = () => {
         e.preventDefault();
 
         (async () => {
-            console.log(e.target.children[1].children[1].value);
-            const docRef = doc(db, "orders", e.target.children[1].children[1].value);
+            const docRef = doc(db, "orders", e.target.children[0].children[1].value);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
-                console.log(docSnap.data());
                 return docSnap.data();
             }
-            return new Error("No se encontro documento");
         })()
             .then((res) => {
-                console.log(res);
+                !res && setError({ message: 'No se ha encontrado una order con ese ID', reload:true});
                 setCartList(res.items);
                 setCartTotal(res.total);
             })
             .catch((error) => {
-                console.log(error);
-                setError(error);
+                error && setError({ message: 'Ha ocurrido un error', home: true, reload:true, description: error.message});
             })
-            .finally(() => setLoading(false))
+            .finally(() => {
+                setLoading(false);
+            })
 
         setFormCompleted(true);
 
@@ -65,18 +63,17 @@ const Orders = () => {
                             <Loading />
                             :
                             (
-                                error === undefined
+                                error
                                     ?
-                                    <OrdersResult cartList={cartList} cartTotal={cartTotal} setFormCompleted={setFormCompleted} />
+                                    <Error error={error} />
                                     :
-                                    <Error message='' />
+                                    <OrdersResult cartList={cartList} cartTotal={cartTotal} setFormCompleted={setFormCompleted} />
                             )
                     )
                     :
                     <OrdersForm orderId={orderId} processForm={processForm} />
             }
         </section>
-
     );
 }
 

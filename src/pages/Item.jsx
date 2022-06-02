@@ -7,9 +7,9 @@ import db from "utils/firebaseConfig";
 // React Router DOM
 import { useParams } from "react-router-dom";
 // Components
-import Loading from "components/Loading";
-import NotFound from "components/NotFound";
 import ItemDetail from "components/ItemDetail";
+import Loading from "components/Loading";
+import Error from "components/Error";
 
 const Item = () => {
 
@@ -44,7 +44,7 @@ const Item = () => {
                         ?
                         <ItemDetail item={item} />
                         :
-                        <NotFound message="No se ha encontrado el producto" />
+                        <Error error={{ message: 'No se ha encontrado el producto', home: true }} />
             }
         </>
     );
