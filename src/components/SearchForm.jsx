@@ -24,7 +24,7 @@ const SearchForm = () => {
                 setSearchParams(searchParams);
             }
             // Redirect
-            location.pathname !== search && navigate(search);
+            location.pathname !== search && navigate(`${search}?query=${e.target[0].value}`);
             // Clean bar
             e.target[0].value = "";
         }}>
