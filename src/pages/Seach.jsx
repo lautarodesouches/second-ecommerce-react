@@ -1,8 +1,6 @@
 // Components
-import FilterOptions from "components/FilterOptions";
-import ItemCard from "components/ItemCard";
-import ItemsContainer from "components/ItemsContainer";
 import Loading from "components/Loading";
+import SearchContainer from "components/SearchContainer";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
@@ -98,56 +96,11 @@ const Search = () => {
     }, [filter])
 
     return (
-        <>
-            {
-                loadign
-                    ?
-                    <Loading />
-                    :
-                    (
-                        <section className="container min-h-screen text-center flex flex-col md:flex-row" >
-                            <div id="filtros" className="fade md:w-1/3 text-left pb-5 md:p-4">
-                                {
-                                    searchParams.get('query') &&
-                                    <FilterOptions
-                                        title='Busqueda'
-                                        param='query'
-                                        array={[searchParams.get('query')]}
-                                        handleFilter={handleFilter}
-                                    />
-                                }
-                                {
-                                    categories.length &&
-                                    <FilterOptions
-                                        title='Categorias'
-                                        param='category'
-                                        array={categories}
-                                        handleFilter={handleFilter}
-                                    />
-                                }
-                                {
-                                    brands.length &&
-                                    <FilterOptions
-                                        title='Marcas'
-                                        param='brand'
-                                        array={brands}
-                                        handleFilter={handleFilter}
-                                    />
-                                }
-                            </div>
-                            <div id="resultados">
-                                {
-                                    items.length > 0
-                                        ?
-                                        <ItemsContainer items={items} />
-                                        :
-                                        <h2 className="fade py-10 md:pt-40">No se han encontrado productos que coincidan con tu búsqueda</h2>
-                                }
-                            </div>
-                        </section>
-                    )
-            }
-        </>
+        loadign
+            ?
+            <Loading />
+            :
+            <SearchContainer brands={brands} categories={categories} handleFilter={handleFilter} items={items} searchParams={searchParams} />
     );
 }
 
