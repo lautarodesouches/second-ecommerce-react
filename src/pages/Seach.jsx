@@ -1,6 +1,7 @@
 // Components
 import FilterOptions from "components/FilterOptions";
 import ItemCard from "components/ItemCard";
+import ItemsContainer from "components/ItemsContainer";
 import Loading from "components/Loading";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
@@ -138,15 +139,7 @@ const Search = () => {
                                 {
                                     items.length > 0
                                         ?
-                                        (
-                                            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
-                                                {
-                                                    items.map(el => (
-                                                        <ItemCard key={el.id} item={el} />
-                                                    ))
-                                                }
-                                            </div>
-                                        )
+                                        <ItemsContainer items={items} />
                                         :
                                         <h2 className="fade py-10 md:pt-40">No se han encontrado productos que coincidan con tu búsqueda</h2>
                                 }
