@@ -1,7 +1,7 @@
 // Utils
 import { capitalize, formatNumber } from "utils/functions";
 
-const CartItem = ({item, removeFromCart}) => {
+const CartItem = ({ item, removeFromCart }) => {
     return (
         <article key={item.id} className="bg-white p-4 rounded flex flex-col sm:flex-row items-center relative gap-4 sm:gap-0">
             <div className="rounded-full bg-red-500 text-white px-2 absolute top-0 right-0 m-2 cursor-pointer" onClick={() => removeFromCart(item)}>x</div>

@@ -2,8 +2,8 @@
 import NotFound from "components/NotFound";
 
 const PageNotFound = () => {
-    return(
-        <NotFound message="No se ha encontrado la página" />        
+    return (
+        <NotFound message="No se ha encontrado la página" />
     );
 }
 

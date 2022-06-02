@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 // Context
 export const FavouriteContex = createContext();
 
-const FavouriteContexProvider = ({children}) => {
+const FavouriteContexProvider = ({ children }) => {
 
     const [favourited, setFavourited] = useState(JSON.parse(localStorage.getItem('favourited')) || []);
 
@@ -15,21 +15,21 @@ const FavouriteContexProvider = ({children}) => {
     const addFavourite = (item) => {
         updateAndSaveFavourited([...favourited, item]);
     }
-    
+
     const removeFavourite = (item) => {
-        updateAndSaveFavourited(favourited.filter( el => el.id !== item.id));
+        updateAndSaveFavourited(favourited.filter(el => el.id !== item.id));
     }
 
     const isInFavourited = (item) => {
-        return favourited.find( el => el.id === item.id) !== undefined;
+        return favourited.find(el => el.id === item.id) !== undefined;
     }
 
     const handleFavourite = (item) => {
         isInFavourited(item) ? removeFavourite(item) : addFavourite(item);
     }
 
-    return(
-        <FavouriteContex.Provider value={{favourited, addFavourite, removeFavourite, isInFavourited, handleFavourite}}>
+    return (
+        <FavouriteContex.Provider value={{ favourited, addFavourite, removeFavourite, isInFavourited, handleFavourite }}>
             {children}
         </FavouriteContex.Provider>
     );

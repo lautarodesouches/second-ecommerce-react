@@ -13,7 +13,7 @@ const CartContextProvider = ({ children }) => {
     }
 
     const addToCart = (item) => {
-        let findItem = cartList.find( (el) => el.id === item.id && el.color === item.color);
+        let findItem = cartList.find((el) => el.id === item.id && el.color === item.color);
 
         if (findItem === undefined) {
             updateAndSaveCart([...cartList, item]);

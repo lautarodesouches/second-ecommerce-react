@@ -10,7 +10,7 @@ import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
 
 const Home = () => {
-    
+
     const [recommended, setRecommended] = useState([]);
     const [featured, setFeatured] = useState([]);
     const [ofertas, setOfertas] = useState([]);
@@ -25,30 +25,30 @@ const Home = () => {
 
                 // Get data
                 const data = shuffle(
-                    result.docs.map( (doc) => (
+                    result.docs.map((doc) => (
                         { id: doc.id, ...doc.data() }
-                        )
+                    )
                     )
                 )
-                
+
                 // Recommended
                 const recommended = [...data];
                 // Sort by amount available
-                recommended.sort( (a,b) => b.amountAvailable - a.amountAvailable);
+                recommended.sort((a, b) => b.amountAvailable - a.amountAvailable);
                 // Limit array
                 recommended.length = 4
                 setRecommended(recommended);
-                
+
                 // Featured
                 const featured = [...data];
                 // Sort by sold
-                featured.sort( (a,b) => b.sold - a.sold);
+                featured.sort((a, b) => b.sold - a.sold);
                 // Limit array
                 featured.length = 4
                 setFeatured(featured);
-                
+
                 // Offers
-                const ofertas = data.filter( (e) => e.discount > 0);
+                const ofertas = data.filter((e) => e.discount > 0);
                 // Limit array
                 ofertas.length = 4
                 setOfertas(ofertas);
@@ -59,20 +59,20 @@ const Home = () => {
             .catch((error) => {
                 console.log(error, ' error');
             })
-    },[])
+    }, [])
 
-    return(
+    return (
         <>
             {
                 loading
-                ?
-                <Loading />
-                :
-                <>
-                    <ItemsContainer title="Productos Recomendados" items={recommended} />
-                    <ItemsContainer title="Productos Destacados" items={featured} />
-                    <ItemsContainer title="Ofertas" items={ofertas} />
-                </>
+                    ?
+                    <Loading />
+                    :
+                    <>
+                        <ItemsContainer title="Productos Recomendados" items={recommended} />
+                        <ItemsContainer title="Productos Destacados" items={featured} />
+                        <ItemsContainer title="Ofertas" items={ofertas} />
+                    </>
             }
         </>
     );

@@ -1,7 +1,7 @@
 // Component
 import ButtonPrimary from "./ButtonPrimary";
 
-const OrdersForm = ({processForm, orderId}) => {
+const OrdersForm = ({ processForm, orderId }) => {
     return (
         <form className="sm:w-1/3 p-4 m-auto bg-white rounded fade" onSubmit={(e) => { processForm(e) }}>
             <h2 className="text-center mb-8 text-lg">Acá podés buscar tu compra con el ID que recibiste en el checkout</h2>

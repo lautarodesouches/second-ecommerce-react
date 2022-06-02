@@ -8,7 +8,7 @@ import { capitalize } from "utils/functions";
 import ButtonGray from "./ButtonGray";
 import HomeButton from "./HomeButton";
 
-const Thankyou = ({buyerName, orderId}) => {
+const Thankyou = ({ buyerName, orderId }) => {
     return (
         <div className="fade text-center">
             <h2 className="text-4xl">Gracias por tu compra {capitalize(buyerName)}</h2>

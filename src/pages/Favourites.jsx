@@ -13,10 +13,10 @@ const Favourites = () => {
         <>
             {
                 favourited.length > 0
-                ?
-                <ItemsContainer title='Favoritos' items={favourited} />
-                :
-                <NotFound message='No se encontraron favoritos' />
+                    ?
+                    <ItemsContainer title='Favoritos' items={favourited} />
+                    :
+                    <NotFound message='No se encontraron favoritos' />
             }
         </>
     );

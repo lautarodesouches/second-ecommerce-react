@@ -10,7 +10,7 @@ import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
 
 const Offers = () => {
-    
+
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -20,15 +20,15 @@ const Offers = () => {
             return await getDocs(querySnapshot);
         })()
             .then((result) => {
-                
+
                 const data = shuffle(
-                    result.docs.map( (doc) => (
+                    result.docs.map((doc) => (
                         { id: doc.id, ...doc.data() }
-                        )
+                    )
                     )
                 )
                 setItems(
-                    data.filter( (e) => e.discount > 0)
+                    data.filter((e) => e.discount > 0)
                 );
 
                 // Loading finished
@@ -37,16 +37,16 @@ const Offers = () => {
             .catch((error) => {
                 console.log(error, ' error');
             })
-    },[])
+    }, [])
 
-    return(
+    return (
         <>
             {
                 loading
-                ?
-                <Loading />
-                :
-                <ItemsContainer title="Ofertas" items={items} />
+                    ?
+                    <Loading />
+                    :
+                    <ItemsContainer title="Ofertas" items={items} />
             }
         </>
     );

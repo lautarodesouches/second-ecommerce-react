@@ -24,9 +24,9 @@ const Categories = () => {
             .then((result) => {
                 // Get unique values
                 const array = new Set(
-                    result.docs.map( (doc) => (
-                            doc.data().category
-                        )
+                    result.docs.map((doc) => (
+                        doc.data().category
+                    )
                     )
                 )
                 setCategories([...array]);
@@ -37,26 +37,26 @@ const Categories = () => {
             .catch((error) => {
                 console.log(error, ' error');
             })
-    },[])
+    }, [])
 
-    return(
+    return (
         <>
             {
                 loading
-                ?
-                <Loading />
-                :
-                <section className="p-8 grid md:grid-cols-4 gap-8 md:pt-16">
-                    {
-                        categories.map(category => (
-                            <Link to={`${search}?category=${category}`} key={category} >
-                                <div className="fade p-4 text-center text-white bg-gradient-to-br from-sky-700 to-blue-700 hover:from-sky-500 hover:to-blue-500 rounded hover:-translate-y-1 transition-all">
-                                    {category}
-                                </div>
-                            </Link>
-                        ))
-                    }
-                </section>
+                    ?
+                    <Loading />
+                    :
+                    <section className="p-8 grid md:grid-cols-4 gap-8 md:pt-16">
+                        {
+                            categories.map(category => (
+                                <Link to={`${search}?category=${category}`} key={category} >
+                                    <div className="fade p-4 text-center text-white bg-gradient-to-br from-sky-700 to-blue-700 hover:from-sky-500 hover:to-blue-500 rounded hover:-translate-y-1 transition-all">
+                                        {category}
+                                    </div>
+                                </Link>
+                            ))
+                        }
+                    </section>
             }
         </>
     );
