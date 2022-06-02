@@ -44,7 +44,7 @@ const Checkout = () => {
                 name: item.name,
                 brand: item.brand,
                 price: item.price,
-                qty: item.selectedUnits,
+                qty: item.qty,
                 color: item.color,
             })),
             date: serverTimestamp()
@@ -58,7 +58,7 @@ const Checkout = () => {
             await getDocs(querySnapshot).then(res => docId = res.docs[0].id);
             // Update
             const itemRef = doc(db, "products", docId);
-            await updateDoc(itemRef, { amountAvailable: increment(- item.selectedUnits) });
+            await updateDoc(itemRef, { amountAvailable: increment(- item.qty) });
         });
 
         // Create new order in firebase

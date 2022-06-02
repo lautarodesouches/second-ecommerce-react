@@ -14,7 +14,7 @@ const Thankyou = ({buyerName, orderId}) => {
             <h2 className="text-4xl">Gracias por tu compra {capitalize(buyerName)}</h2>
             <h5 className="text-xl mt-4"> Tu ID de compra es:</h5>
             <h5 className="text-xl font-bold">{orderId}</h5>
-            <Link to={orders} className='my-8 block'>
+            <Link to={`${orders}${orderId}`} className='my-8 block'>
                 <ButtonGray>
                     Podes usar este ID para seguir el estado de tu compra acá
                 </ButtonGray>

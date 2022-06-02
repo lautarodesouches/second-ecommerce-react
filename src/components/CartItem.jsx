@@ -18,11 +18,11 @@ const CartItem = ({item, removeFromCart}) => {
             </div>
             <div className="sm:w-2/12">
                 <h4 className="text-gray-500 mb-2">Cantidad:</h4>
-                <h3 className="text-2xl">{item.selectedUnits}</h3>
+                <h3 className="text-2xl">{item.qty}</h3>
             </div>
             <div className="sm:w-2/12">
                 <h4 className="text-gray-500 mb-2">Subtotal:</h4>
-                <h3 className="text-2xl">{formatNumber(item.price * item.selectedUnits)}</h3>
+                <h3 className="text-2xl">{formatNumber(item.price * item.qty)}</h3>
             </div>
         </article>
     );

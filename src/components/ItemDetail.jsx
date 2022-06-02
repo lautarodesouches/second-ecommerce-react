@@ -23,7 +23,7 @@ const ItemDetail = ({ item }) => {
     const { addToCart } = useContext(CartContext);
 
     const [mainImg, setMainImg] = useState(1);
-    const [selectedUnits, setSelectedUnits] = useState(1);
+    const [qty, setQty] = useState(1);
     const [displaySelectUnits, setDisplaySelectUnits] = useState(false);
     const [color, setColor] = useState(null);
     const [displayUnitsInput, setDisplayUnitsInput] = useState(false);
@@ -42,27 +42,27 @@ const ItemDetail = ({ item }) => {
     }
 
     const handleUnitInput = (e) => {
-        e.target.value > 0 && setSelectedUnits(e.target.value);
+        e.target.value > 0 && setQty(e.target.value);
         setDisplaySelectUnits(false);
         setDisplayUnitsInput(false);
     }
 
     const handleSelectUnits = (i) => {
-        i < item.amountAvailable && setSelectedUnits(i);
+        i < item.amountAvailable && setQty(i);
         setDisplaySelectUnits(!displaySelectUnits);
     }
 
     const handleAddToCart = (redirect) => {
         // Quantity warning
-        selectedUnits < 1 && notification("La cantidad debe ser mayor a uno", "bg-red-500");
+        qty < 1 && notification("La cantidad debe ser mayor a uno", "bg-red-500");
         // Color unselected
         !color && notification("Por favor, elija un color", "bg-red-500");
         // All selected OK
-        if (selectedUnits && color) {
+        if (qty && color) {
             // Add item
-            addToCart({ ...item, selectedUnits, color });
+            addToCart({ ...item, qty, color });
             // Add to cart display confirmation message
-            !redirect && notification(`Se ${selectedUnits > 1 ? 'agregaron' : 'agrego'} ${selectedUnits} ${item.name} al carrito`, 'bg-blue-500');
+            !redirect && notification(`Se ${qty > 1 ? 'agregaron' : 'agrego'} ${qty} ${item.name} al carrito`, 'bg-blue-500');
         }
         // If user selects "buy now" set redirect true to redirect to cart
         setRedirect(redirect);
@@ -132,7 +132,7 @@ const ItemDetail = ({ item }) => {
                 }
                 <div tabIndex="0" className="mt-6 text-lg cursor-pointer relative" ref={focusSelectUnits} onBlur={() => { displayUnitsInput && setDisplaySelectUnits(false) }}>
                     <h3 onClick={() => handleShowSelectUnits()}>
-                        Cantidad: <span className={selectedUnits > item.amountAvailable ? 'text-red-500' : 'text-black'}>{selectedUnits}</span> unidad
+                        Cantidad: <span className={qty > item.amountAvailable ? 'text-red-500' : 'text-black'}>{qty}</span> unidad
                         <ArrowDown svgClass={`mx-2 w-4 inline fill-white bg-blue-500 rounded transition-all transform ${displaySelectUnits ? 'rotate-180' : 'rotate-0'}`} />
                         <span className="text-neutral-500">
                             {` (${item.amountAvailable} disponible${item.amountAvailable > 1 && 's'})`}
@@ -143,7 +143,7 @@ const ItemDetail = ({ item }) => {
                             [1, 2, 3, 4, 5].map(i =>
                                 <div
                                     key={i}
-                                    className={`py-1 border border-solid ${i === selectedUnits ? 'border-blue-700' : 'border-gray-100'} transition-all ${i > item.amountAvailable ? 'text-gray-400 hover:bg-red-200' : 'hover:bg-slate-300'}`}
+                                    className={`py-1 border border-solid ${i === qty ? 'border-blue-700' : 'border-gray-100'} transition-all ${i > item.amountAvailable ? 'text-gray-400 hover:bg-red-200' : 'hover:bg-slate-300'}`}
                                     onClick={() => handleSelectUnits(i)}>
                                     <h4>{i}</h4>
                                 </div>

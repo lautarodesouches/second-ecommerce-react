@@ -8,9 +8,9 @@ import ButtonPrimary from "./ButtonPrimary";
 const HomeButton = () => {
     return (
         <div>
-            <Link to={home} >
-                <ButtonPrimary>
-                    Volver a inicio
+            <Link to={home} className="w-full" >
+                <ButtonPrimary whith="w-full">
+                    Volver al inicio
                 </ButtonPrimary>
             </Link>
         </div>

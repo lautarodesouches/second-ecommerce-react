@@ -18,7 +18,7 @@ const CartContextProvider = ({ children }) => {
         if (findItem === undefined) {
             updateAndSaveCart([...cartList, item]);
         } else {
-            findItem.selectedUnits += item.selectedUnits;
+            findItem.qty += item.qty;
             updateAndSaveCart([...cartList])
         }
     }
@@ -36,7 +36,7 @@ const CartContextProvider = ({ children }) => {
     }
 
     const cartTotal = () => {
-        return cartList.reduce((acc, item) => acc + (item.price * item.selectedUnits), 0);
+        return cartList.reduce((acc, item) => acc + (item.price * item.qty), 0);
     }
 
     return (
