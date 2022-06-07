@@ -90,7 +90,6 @@ const Search = () => {
             })
     }, []);
 
-
     useEffect(() => {
         filter();
     }, [filter])
