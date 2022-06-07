@@ -1,11 +1,12 @@
 // Components
 import FilterOptions from "./FilterOptions";
 import ItemsContainer from "./ItemsContainer";
+import Sort from "./Sort";
 
 const SearchContainer = ({ searchParams, handleFilter, categories, brands, items }) => {
     return (
         <section className="min-h-screen text-center flex flex-col md:flex-row" >
-            <div id="filtros" className="fade md:w-1/4 text-left pb-5 md:p-4">
+            <div id="filtros" className="fade md:w-1/4 text-left md:p-4">
                 {
                     searchParams.get('query') &&
                     <FilterOptions
@@ -35,6 +36,7 @@ const SearchContainer = ({ searchParams, handleFilter, categories, brands, items
                 }
             </div>
             <div className="md:w-3/4" id="resultados">
+                <Sort handleFilter={handleFilter} searchParams={searchParams} />
                 {
                     items.length > 0
                         ?

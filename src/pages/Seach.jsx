@@ -1,4 +1,5 @@
 // Components
+import Error from "components/Error";
 import Loading from "components/Loading";
 import SearchContainer from "components/SearchContainer";
 // Firebase
@@ -21,6 +22,8 @@ const Search = () => {
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
 
+    const [errorMessage, setErrorMessage] = useState(null);
+
     // Get search params
     let [searchParams, setSearchParams] = useSearchParams();
 
@@ -38,12 +41,15 @@ const Search = () => {
         let query = searchParams.get('query');
         let category = searchParams.get('category');
         let brand = searchParams.get('brand');
+        let sort = searchParams.get('sort');
         // Copy data
         let data = [...copyItems];
         // Filter data
         query && (data = data.filter(e => e.category.toLowerCase().includes(query) || e.brand.toLowerCase().includes(query) || e.name.toLowerCase().includes(query)));
         category && (data = data.filter(e => e.category === category));
         brand && (data = data.filter(e => e.brand === brand));
+        // Sort data
+        data.sort();
         // Set result
         setItems(data);
     }, [copyItems, searchParams])
@@ -86,7 +92,7 @@ const Search = () => {
 
             })
             .catch((error) => {
-                console.log(error, ' error');
+                setErrorMessage(error.message);
             })
     }, []);
 
@@ -99,7 +105,13 @@ const Search = () => {
             ?
             <Loading />
             :
-            <SearchContainer brands={brands} categories={categories} handleFilter={handleFilter} items={items} searchParams={searchParams} />
+            (
+                errorMessage
+                ?
+                <Error error={{ message: errorMessage, home: true, reload:true}} />
+                :
+                <SearchContainer brands={brands} categories={categories} handleFilter={handleFilter} items={items} searchParams={searchParams} />
+            )
     );
 }
 

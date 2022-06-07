@@ -37,7 +37,7 @@ const NavBar = () => {
                 <div onClick={toggleShowMenu}>
                     <ChevronDown svgClass={`w-5 md:hidden m-auto pb-2 pt-4 fill-white transition-all transform ${showMenu ? 'rotate-0' : 'rotate-180'}`} />
                 </div>
-                <div className={`${showMenu ? "hidden" : "flex"} md:block md:mt-4`}>
+                <div className={`${showMenu ? "hidden" : "flex"} md:block md:mt-4 fade`}>
                     <ul className="flex flex-col md:gap-6 items-center md:flex-row justify-center m-auto">
                         <li>
                             <Link to={home} onClick={toggleShowMenu}>Inicio</Link>
