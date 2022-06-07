@@ -49,7 +49,9 @@ const Search = () => {
         category && (data = data.filter(e => e.category === category));
         brand && (data = data.filter(e => e.brand === brand));
         // Sort data
-        data.sort();
+        sort === 'min' && data.sort((a, b) => a.price - b.price);
+        sort === 'max' && data.sort((a, b) => b.price - a.price);
+        sort === 'random' && shuffle(data);
         // Set result
         setItems(data);
     }, [copyItems, searchParams])
@@ -107,10 +109,10 @@ const Search = () => {
             :
             (
                 errorMessage
-                ?
-                <Error error={{ message: errorMessage, home: true, reload:true}} />
-                :
-                <SearchContainer brands={brands} categories={categories} handleFilter={handleFilter} items={items} searchParams={searchParams} />
+                    ?
+                    <Error error={{ message: errorMessage, home: true, reload: true }} />
+                    :
+                    <SearchContainer brands={brands} categories={categories} handleFilter={handleFilter} items={items} searchParams={searchParams} />
             )
     );
 }
