@@ -69,7 +69,7 @@ const ItemDetail = ({ item }) => {
     }
 
     return (
-        <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto fade">
+        <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto fade select-none">
             <div className="w-full text-left">
                 <Link to={`${search}/?category=${item.category}`} >{item.category}</Link>
                 {' > '}
@@ -130,7 +130,7 @@ const ItemDetail = ({ item }) => {
                 {
                     item.freeShipping && <FreeShipping />
                 }
-                <div tabIndex="0" className="mt-6 text-lg cursor-pointer relative" ref={focusSelectUnits} onBlur={() => { displayUnitsInput && setDisplaySelectUnits(false) }}>
+                <div tabIndex="0" className="mt-6 text-lg cursor-pointer relative select-none" ref={focusSelectUnits} onBlur={() => { displayUnitsInput && setDisplaySelectUnits(false) }}>
                     <h3 onClick={() => handleShowSelectUnits()}>
                         Cantidad: <span className={qty > item.amountAvailable ? 'text-red-500' : 'text-black'}>{qty}</span> unidad
                         <ArrowDown svgClass={`mx-2 w-4 inline fill-white bg-blue-500 rounded transition-all transform ${displaySelectUnits ? 'rotate-180' : 'rotate-0'}`} />
@@ -166,12 +166,12 @@ const ItemDetail = ({ item }) => {
                     <div className="flex sm:w-2/3 mt-4 mx-auto gap-4">
                         {
                             item.availableColors.map(i =>
-                                <span key={i} className={`${i === color ? 'border border-blue-700' : 'bg-white hover:bg-slate-300'} rounded cursor-pointer grow shadow py-1 transition`} onClick={() => setColor(i)}>{capitalize(i)}</span>
+                                <span key={i} className={`${i === color ? 'border border-blue-700' : 'bg-white hover:bg-slate-300'} rounded select-none cursor-pointer grow shadow py-1 transition`} onClick={() => setColor(i)}>{capitalize(i)}</span>
                             )
                         }
                     </div>
                 </div>
-                <div className="md:flex mt-8 justify-evenly">
+                <div className="md:flex mt-8 justify-evenly md:gap-6">
                     <ButtonSecondary onClick={() => handleAddToCart(false)}>
                         Agregar al carrito
                     </ButtonSecondary>

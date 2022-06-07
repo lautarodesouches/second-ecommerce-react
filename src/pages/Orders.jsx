@@ -27,7 +27,7 @@ const Orders = () => {
         e.preventDefault();
 
         (async () => {
-            const docRef = doc(db, "orders", e.target.children[0].children[1].value);
+            const docRef = doc(db, "orders", e.target.children[1].children[1].value);
             const docSnap = await getDoc(docRef);
 
             if (docSnap.exists()) {
@@ -35,12 +35,15 @@ const Orders = () => {
             }
         })()
             .then((res) => {
-                !res && setError({ message: 'No se ha encontrado una order con ese ID', reload:true});
+                if (res === undefined) {
+                    setError({ message: 'No se ha encontrado una order con ese ID', home: true, reload:true})
+                    throw error
+                }
                 setCartList(res.items);
                 setCartTotal(res.total);
             })
             .catch((error) => {
-                error && setError({ message: 'Ha ocurrido un error', home: true, reload:true, description: error.message});
+                error && setError({ message: error.message, home: true, reload:true, description: error.message});
             })
             .finally(() => {
                 setLoading(false);

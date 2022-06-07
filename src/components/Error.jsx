@@ -5,12 +5,7 @@ import HomeButton from "./HomeButton";
 
 const Error = ({ error = { message: 'Ha ocurrido un error' } }) => {
 
-    console.log(error.name, ' - name');
-    console.log(error.message, ' - message');
-    console.log(error.number, ' - number');
-    console.log(error.description, ' - description');
-    console.log(error.home, ' - description');
-    console.log(error.reload, ' - description');
+    console.log(error ,'%c Error ', 'background: red; color: white; padding: 5px; margin: 5px; border-radius: 10px');
 
     return (
         <div className={`fade text-center mt-10`}>
