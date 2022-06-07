@@ -4,8 +4,8 @@ import ItemsContainer from "./ItemsContainer";
 
 const SearchContainer = ({ searchParams, handleFilter, categories, brands, items }) => {
     return (
-        <section className="container min-h-screen text-center flex flex-col md:flex-row" >
-            <div id="filtros" className="fade md:w-1/3 text-left pb-5 md:p-4">
+        <section className="min-h-screen text-center flex flex-col md:flex-row" >
+            <div id="filtros" className="fade md:w-1/4 text-left pb-5 md:p-4">
                 {
                     searchParams.get('query') &&
                     <FilterOptions
@@ -34,7 +34,7 @@ const SearchContainer = ({ searchParams, handleFilter, categories, brands, items
                     />
                 }
             </div>
-            <div id="resultados">
+            <div className="md:w-3/4" id="resultados">
                 {
                     items.length > 0
                         ?
