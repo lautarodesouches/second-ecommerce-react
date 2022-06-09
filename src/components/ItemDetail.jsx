@@ -3,14 +3,14 @@ import { useContext, useRef, useState } from "react";
 // Utils
 import { capitalize, formatNumber, notification } from "utils/functions";
 // Components
+import FreeShipping from "./FreeShipping";
 import ButtonPrimary from "./ButtonPrimary";
 import ButtonSecondary from "./ButtonSecondary";
-import FreeShipping from "./FreeShipping";
 // Assets
-import ArrowDown from "assets/ArrowDown";
 import StarFill from "assets/StarFill";
 import StarHalf from "assets/StarHalf";
 import StarEmpty from "assets/StarEmpty";
+import ArrowDown from "assets/ArrowDown";
 // React Router DOM
 import { Link, Navigate } from "react-router-dom";
 // Routes
@@ -41,18 +41,18 @@ const ItemDetail = ({ item }) => {
             })
     }
 
-    const handleUnitInput = (e) => {
+    const handleUnitInput = e => {
         e.target.value > 0 && setQty(e.target.value);
         setDisplaySelectUnits(false);
         setDisplayUnitsInput(false);
     }
 
-    const handleSelectUnits = (i) => {
+    const handleSelectUnits = i => {
         i < item.amountAvailable && setQty(i);
         setDisplaySelectUnits(!displaySelectUnits);
     }
 
-    const handleAddToCart = (redirect) => {
+    const handleAddToCart = redirect => {
         // Quantity warning
         qty < 1 && notification("La cantidad debe ser mayor a uno", "bg-red-500");
         // Color unselected
@@ -69,7 +69,7 @@ const ItemDetail = ({ item }) => {
     }
 
     return (
-        <section className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto fade select-none">
+        <article className="container flex flex-col md:flex-row flex-wrap bg-white rounded p-4 my-4 text-center m-auto fade select-none">
             <div className="w-full text-left">
                 <Link to={`${search}/?category=${item.category}`} >{item.category}</Link>
                 {' > '}
@@ -184,7 +184,7 @@ const ItemDetail = ({ item }) => {
                 // Buy now action
                 redirect && <Navigate to={cart} />
             }
-        </section>
+        </article>
     );
 }
 

@@ -7,29 +7,23 @@ const FavouriteContexProvider = ({ children }) => {
 
     const [favourited, setFavourited] = useState(JSON.parse(localStorage.getItem('favourited')) || []);
 
-    const updateAndSaveFavourited = (data) => {
-        setFavourited(data)
+    const updateAndSaveFavourited = data => {
+        setFavourited(data);
         localStorage.setItem('favourited', JSON.stringify(data));
     }
 
-    const addFavourite = (item) => {
-        updateAndSaveFavourited([...favourited, item]);
-    }
+    const addFavourite = item => updateAndSaveFavourited([...favourited, item]);
 
-    const removeFavourite = (item) => {
-        updateAndSaveFavourited(favourited.filter(el => el.id !== item.id));
-    }
+    const removeFavourite = item => updateAndSaveFavourited(favourited.filter(el => el.id !== item.id));
 
-    const isInFavourited = (item) => {
-        return favourited.find(el => el.id === item.id) !== undefined;
-    }
+    const clearFavourites = () => setFavourited([]);
 
-    const handleFavourite = (item) => {
-        isInFavourited(item) ? removeFavourite(item) : addFavourite(item);
-    }
+    const isInFavourited = item => favourited.find(el => el.id === item.id) !== undefined;
+
+    const handleFavourite = item => isInFavourited(item) ? removeFavourite(item) : addFavourite(item);
 
     return (
-        <FavouriteContex.Provider value={{ favourited, addFavourite, removeFavourite, isInFavourited, handleFavourite }}>
+        <FavouriteContex.Provider value={{ favourited, addFavourite, removeFavourite, clearFavourites, isInFavourited, handleFavourite }}>
             {children}
         </FavouriteContex.Provider>
     );

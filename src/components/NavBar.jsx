@@ -14,16 +14,14 @@ const NavBar = () => {
 
     const [showMenu, setShowMenu] = useState(true);
 
-    const toggleShowMenu = () => {
-        setShowMenu(!showMenu);
-    }
+    const toggleShowMenu = () => setShowMenu(!showMenu);
 
     return (
         <nav className="bg-sky-700 text-white p-2">
             <div className="flex flex-wrap items-center text-center">
                 <div className="w-1/4 md:w-1/3 h-full flex justify-center">
                     <Link to={home}>
-                        <h1 className="text-lg">Titulo</h1>
+                        <h1 className="md:text-lg">Ecommerce</h1>
                     </Link>
                 </div>
                 <div className="w-2/4 md:w-1/3">

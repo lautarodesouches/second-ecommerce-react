@@ -7,14 +7,14 @@ const CartContextProvider = ({ children }) => {
 
     const [cartList, setCartList] = useState(JSON.parse(localStorage.getItem('cartList')) || []);
 
-    const updateAndSaveCart = (data) => {
+    const updateAndSaveCart = data => {
         setCartList(data);
         localStorage.setItem('cartList', JSON.stringify(data));
     }
 
-    const addToCart = (item) => {
+    const addToCart = item => {
         let findItem = cartList.find((el) => el.id === item.id && el.color === item.color);
-
+        //
         if (findItem === undefined) {
             updateAndSaveCart([...cartList, item]);
         } else {
@@ -23,21 +23,13 @@ const CartContextProvider = ({ children }) => {
         }
     }
 
-    const removeFromCart = (item) => {
-        updateAndSaveCart(cartList.filter(el => el.id !== item.id));
-    }
+    const removeFromCart = item => updateAndSaveCart(cartList.filter(el => el.id !== item.id));
 
-    const clearCart = () => {
-        updateAndSaveCart([]);
-    }
+    const clearCart = () => updateAndSaveCart([]);
 
-    const countItems = () => {
-        return cartList.length;
-    }
+    const countItems = () => cartList.length;
 
-    const cartTotal = () => {
-        return cartList.reduce((acc, item) => acc + (item.price * item.qty), 0);
-    }
+    const cartTotal = () => cartList.reduce((acc, item) => acc + (item.price * item.qty), 0);
 
     return (
         <CartContext.Provider value={{ cartList, addToCart, removeFromCart, clearCart, countItems, cartTotal }} >

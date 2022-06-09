@@ -32,13 +32,11 @@ const FilterOptions = ({ title, param, array, handleFilter }) => {
                         :
                         // Else show options
                         array.map(element =>
-                        (
                             <li className="p-1 fade" key={element}>
-                                <span className="cursor-pointer" onClick={() => { handleFilter(param, element) }}>
+                                <span className="cursor-pointer" onClick={() => handleFilter(param, element)}>
                                     {element}
                                 </span>
                             </li>
-                        )
                         )
                 }
             </ul>

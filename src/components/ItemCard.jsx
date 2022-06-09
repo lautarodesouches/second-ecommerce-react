@@ -17,18 +17,18 @@ const ItemCard = ({ item }) => {
             {/* ------------------------------ */}
             <Link to={products + id}>
                 <img className="max-w-full max-h-32 m-auto" src={`https://lautarodesouches.github.io/ecommerce/img/${id}-1.png`} alt={name} loading="lazy" />
-                <h3 className={`pt-3 pb-1 ${discount ? "text-slate-500 text-sm line-through" : "text-xl"}`}>{formatNumber(price)}</h3>
+                <h4 className={`pt-3 pb-1 ${discount ? "text-slate-500 text-sm line-through" : "text-xl"}`}>{formatNumber(price)}</h4>
                 {
-                    // If has discount show new price
+                    // If the product has a discount show new price
                     discount !== 0 &&
-                    <h3 className={`pb-1 text-xl`}>
+                    <h4 className={`pb-1 text-xl`}>
                         {formatNumber(Math.round(price - price * discount / 100))}
                         <span className="text-sm text-green-600 font-semibold"> {discount}%</span>
-                    </h3>
+                    </h4>
                 }
                 <h3>{name}</h3>
                 {
-                    freeShipping && <h3 className='pb-1 text-green-600 font-semibold rounded inline-block px-2 py-1 my-3'>Envio gratis</h3>
+                    freeShipping && <h4 className='pb-1 text-green-600 font-semibold rounded inline-block px-2 py-1 my-3'>Envio gratis</h4>
                 }
             </Link>
         </article>
