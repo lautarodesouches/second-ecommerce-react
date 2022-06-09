@@ -16,7 +16,7 @@ const FavouriteContexProvider = ({ children }) => {
 
     const removeFavourite = item => updateAndSaveFavourited(favourited.filter(el => el.id !== item.id));
 
-    const clearFavourites = () => setFavourited([]);
+    const clearFavourites = () => updateAndSaveFavourited([]);
 
     const isInFavourited = item => favourited.find(el => el.id === item.id) !== undefined;
 

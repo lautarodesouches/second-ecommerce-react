@@ -13,7 +13,7 @@ const Favourites = () => {
     
     const { setError, MyError } = useContext(ErrorContext);
 
-    if(favourited.length < 1) setError(new MyError('Sin favoritos', true, 'No se encontraron favoritos', false));
+    if(favourited.length < 1) setError(new MyError('Favoritos vacio', true, 'No se encontraron favoritos', false));
 
     return (
         <>

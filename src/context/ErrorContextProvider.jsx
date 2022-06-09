@@ -32,7 +32,10 @@ const ErrorContextProvider = ({ children }) => {
         }
     }
 
-    error.description && console.log(`%c${error.description}`, 'background: red; color: white; padding: 5px 10px; margin: 5px; border-radius: 10px;');
+    // Show biggest errors in console
+    if (error) {
+        if (!error.description.includes('vacio')) console.log(`%c${error.description}`, 'background: red; color: white; padding: 5px 10px; margin: 5px; border-radius: 10px;');
+    }
 
     return (
         <ErrorContext.Provider value={{ setError, MyError }}>
@@ -43,7 +46,7 @@ const ErrorContextProvider = ({ children }) => {
                         className='fade text-center mt-32 p-4 select-none focus:outline-none'
                         tabIndex="1"
                         autoFocus
-                        onClick={() => {mainRef.current.focus()}}
+                        onClick={() => { mainRef.current.focus() }}
                         ref={mainRef}
                         onBlur={() => {
                             //console.log('test');
