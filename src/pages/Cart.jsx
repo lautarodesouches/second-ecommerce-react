@@ -1,5 +1,4 @@
 // Components
-import Button from "components/Button";
 import CartItem from "components/CartItem";
 import ButtonGray from "components/ButtonGray";
 import ButtonPrimary from "components/ButtonPrimary";
@@ -14,6 +13,7 @@ import { checkout, home } from "routes/Routes";
 // Utils
 import { formatNumber } from "utils/functions";
 import { ErrorContext } from "context/ErrorContextProvider";
+import ButtonDanger from "components/ButtonDanger";
 
 const Cart = () => {
 
@@ -29,9 +29,9 @@ const Cart = () => {
                     <ButtonGray>Seguir comprando</ButtonGray>
                 </Link>
                 <div className="grow"></div>
-                <Button onClick={clearCart} buttonClass={'border border-solid border-red-500 text-red-500 hover:bg-red-500 hover:text-white'}>
+                <ButtonDanger onClick={clearCart}>
                     Eliminar Items
-                </Button>
+                </ButtonDanger>
             </section>
             <section className="flex flex-col gap-4 mt-8">
                 {
