@@ -20,7 +20,7 @@ const Cart = () => {
     const { cartList, removeFromCart, clearCart, cartTotal } = useContext(CartContext);
     const { setError, MyError } = useContext(ErrorContext);
 
-    if (cartList.length < 1) setError(new MyError('Carrito vacio', true, 'El carrito se encuentra vacio'));
+    if (cartList.length < 1) setError(new MyError('Carrito vacio', true, 'El carrito se encuentra vacio', false));
 
     return (
         <div className="sm:w-11/12 m-auto mt-4 text-center fade">
