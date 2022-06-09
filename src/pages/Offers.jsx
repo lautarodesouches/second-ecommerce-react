@@ -4,12 +4,16 @@ import Loading from "components/Loading";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // Utils
 import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
+// Context
+import { ErrorContext } from "context/ErrorContextProvider";
 
 const Offers = () => {
+
+    const { setError, MyError } = useContext(ErrorContext);
 
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -21,23 +25,28 @@ const Offers = () => {
         })()
             .then((result) => {
 
-                const data = shuffle(
-                    result.docs.map((doc) => (
-                        { id: doc.id, ...doc.data() }
-                    )
-                    )
-                )
-                setItems(
-                    data.filter((e) => e.discount > 0)
-                );
+                if (!result.docs) { throw new Error('doc') };
 
-                // Loading finished
-                setLoading(false);
+                const data = shuffle(
+                    result.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                )
+
+                let offers = data.filter(e => e.discount > 0);
+                if (!offers) throw new Error('discount');
+                setItems(offers);
+
             })
-            .catch((error) => {
-                console.log(error, ' error');
+            .catch(error => {
+                if (error.message === 'docs') {
+                    setError(new MyError('Sin docs', true, 'Algo salio mal :('));
+                } else if (error.message === 'discount') {
+                    setError(new MyError('Sin descuento', true, 'No se encontraron ofertas'));
+                } else {
+                    setError(new MyError(error));
+                }
             })
-    }, [])
+            .finally(() => setLoading(false))
+    }, [MyError, setError])
 
     return (
         <>

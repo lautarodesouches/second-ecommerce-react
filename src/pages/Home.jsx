@@ -1,15 +1,19 @@
 // Components
 import ItemsContainer from "components/ItemsContainer";
 import Loading from "components/Loading";
+// Context
+import { ErrorContext } from "context/ErrorContextProvider";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // Utils
 import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
 
 const Home = () => {
+
+    const { setError, MyError } = useContext(ErrorContext);
 
     const [recommended, setRecommended] = useState([]);
     const [featured, setFeatured] = useState([]);
@@ -18,7 +22,7 @@ const Home = () => {
 
     useEffect(() => {
         (async function () {
-            const querySnapshot = query(collection(db, "products"))
+            const querySnapshot = query(collection(db, "products"));
             return await getDocs(querySnapshot);
         })()
             .then((result) => {
@@ -53,13 +57,12 @@ const Home = () => {
                 ofertas.length = 4
                 setOfertas(ofertas);
 
-                // Loading finished
-                setLoading(false);
             })
-            .catch((error) => {
-                console.log(error, ' error');
+            .catch(error => {
+                setError(new MyError(error, false));
             })
-    }, [])
+            .finally(() => setLoading(false))
+    }, [setError, MyError])
 
     return (
         <>

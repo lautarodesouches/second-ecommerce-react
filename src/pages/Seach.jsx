@@ -1,18 +1,21 @@
 // Components
-import Error from "components/Error";
 import Loading from "components/Loading";
 import SearchContainer from "components/SearchContainer";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 // React DOM
 import { useSearchParams } from "react-router-dom";
 // Utils
 import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
+// Context
+import { ErrorContext } from "context/ErrorContextProvider";
 
 const Search = () => {
+
+    const {setError, MyError} = useContext(ErrorContext);
 
     const [items, setItems] = useState([]);
     const [copyItems, setCopyItems] = useState([]);
@@ -21,8 +24,6 @@ const Search = () => {
 
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
-
-    const [errorMessage, setErrorMessage] = useState(null);
 
     // Get search params
     let [searchParams, setSearchParams] = useSearchParams();
@@ -94,9 +95,9 @@ const Search = () => {
 
             })
             .catch((error) => {
-                setErrorMessage(error.message);
+                setError(new MyError(error));
             })
-    }, []);
+    }, [MyError, setError]);
 
     useEffect(() => {
         filter();
@@ -107,13 +108,7 @@ const Search = () => {
             ?
             <Loading />
             :
-            (
-                errorMessage
-                    ?
-                    <Error error={{ message: errorMessage, home: true, reload: true }} />
-                    :
-                    <SearchContainer brands={brands} categories={categories} handleFilter={handleFilter} items={items} searchParams={searchParams} />
-            )
+            <SearchContainer brands={brands} categories={categories} handleFilter={handleFilter} items={items} searchParams={searchParams} />
     );
 }
 

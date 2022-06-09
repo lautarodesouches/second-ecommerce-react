@@ -1,11 +1,14 @@
-// Components
-import Error from "components/Error";
+// Context
+import { ErrorContext } from "context/ErrorContextProvider";
+// React
+import { useContext } from "react";
 
 const PageNotFound = () => {
 
-    return (
-        <Error error={{ message: 'No se ha encontrado la página', number: 404 }} />
-    );
+    const {setError, MyError} = useContext(ErrorContext);
+
+    setError(new MyError('Page not found', true, 'Página no encontrada'));
+
 }
 
 export default PageNotFound;

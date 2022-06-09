@@ -2,24 +2,20 @@
 import { useContext } from "react";
 // Context
 import { FavouriteContex } from "context/FavouriteContexProvider";
+import { ErrorContext } from "context/ErrorContextProvider";
 // Components
 import ItemsContainer from "components/ItemsContainer";
-import Error from "components/Error";
 
 const Favourites = () => {
 
     const { favourited } = useContext(FavouriteContex);
+    
+    const { setError, MyError } = useContext(ErrorContext);
+
+    if(favourited.length < 1) setError(new MyError('Sin favoritos', true, 'No se encontraron favoritos'));
 
     return (
-        <>
-            {
-                favourited.length > 0
-                    ?
-                    <ItemsContainer title='Favoritos' items={favourited} />
-                    :
-                    <Error error={{ message: 'No se encontraron favoritos', home: true}} />
-            }
-        </>
+        <ItemsContainer title='Favoritos' items={favourited} />
     );
 }
 

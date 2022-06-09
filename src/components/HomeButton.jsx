@@ -5,9 +5,9 @@ import { home } from "routes/Routes";
 // Component
 import ButtonPrimary from "./ButtonPrimary";
 
-const HomeButton = () => {
+const HomeButton = ({onClick}) => {
     return (
-        <Link to={home} className="grow" >
+        <Link to={home} className="grow" onClick={onClick}>
             <ButtonPrimary>
                 Volver al inicio
             </ButtonPrimary>

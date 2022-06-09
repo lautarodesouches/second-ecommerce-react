@@ -1,9 +1,9 @@
 // Components
-import Error from "components/Error";
 import Thankyou from "components/Thankyou";
 import CheckoutForm from "components/CheckoutForm";
 // Context
 import { CartContext } from "context/CartContextProvider";
+import { ErrorContext } from "context/ErrorContextProvider";
 // Firebase
 import { collection, doc, getDocs, increment, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 // React
@@ -15,19 +15,17 @@ const Checkout = () => {
 
     const { cartList, clearCart, cartTotal } = useContext(CartContext);
 
+    const { setError, MyError } = useContext(ErrorContext);
+
     const [orderId, setOrderId] = useState("");
-    const [formOk, setFormOk] = useState(false);
     const [buyerName, setBuyerName] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
     const [formInomplete, setFormIncomplete] = useState(true);
 
     const createOrder = (e) => {
 
         e.preventDefault();
 
-        const inputValue = (n) => {
-            return e.target.children[n].children[1].value;
-        }
+        const inputValue = n => e.target.children[n].children[1].value;
 
         setBuyerName(inputValue(0));
 
@@ -39,19 +37,21 @@ const Checkout = () => {
                 phone: inputValue(2)
             },
             total: cartTotal(),
-            items: cartList.map(item => ({
-                id: item.id,
-                name: item.name,
-                brand: item.brand,
-                price: item.price,
-                qty: item.qty,
-                color: item.color,
-            })),
+            items: cartList.map(
+                item => ({
+                    id: item.id,
+                    name: item.name,
+                    brand: item.brand,
+                    price: item.price,
+                    qty: item.qty,
+                    color: item.color,
+                })
+            ),
             date: serverTimestamp()
         }
 
         // Update stock
-        cartList.forEach(async (item) => {
+        cartList.forEach(async item => {
             // Get item doc by id
             let docId;
             const querySnapshot = query(collection(db, "products"), where("id", "==", item.id));
@@ -68,15 +68,13 @@ const Checkout = () => {
             return newOrderRef;
         })()
             .then(result => {
-                setFormOk(true);
-                setFormIncomplete(false);
                 setOrderId(result.id);
                 clearCart();
             })
             .catch(error => {
-                setFormIncomplete(false);
-                setErrorMessage(error.message);
-            });
+                setError(new MyError(error));
+            })
+            .finally(() => setFormIncomplete(false));
 
     }
 
@@ -87,13 +85,7 @@ const Checkout = () => {
                     ?
                     <CheckoutForm createOrder={createOrder} />
                     :
-                    (
-                        formOk
-                            ?
-                            <Thankyou buyerName={buyerName} orderId={orderId} />
-                            :
-                            <Error error={{ message: errorMessage, home: true, reload:true}} />
-                    )
+                    <Thankyou buyerName={buyerName} orderId={orderId} />
             }
         </section>
     );
