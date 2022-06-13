@@ -14,7 +14,7 @@ import Error from "components/Error";
 const Item = () => {
 
     const [item, setItem] = useState(null);
-    const [error, setError] = useState(true);
+    const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
 
     const { itemID } = useParams();
