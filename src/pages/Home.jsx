@@ -1,38 +1,34 @@
 // Components
-import ItemsContainer from "components/ItemsContainer";
+import Error from "components/Error";
 import Loading from "components/Loading";
-// Context
-import { ErrorContext } from "context/ErrorContextProvider";
+import ItemsContainer from "components/ItemsContainer";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // Utils
-import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
+import db from "utils/firebaseConfig";
 
 const Home = () => {
 
-    const { setError, MyError } = useContext(ErrorContext);
 
-    const [recommended, setRecommended] = useState([]);
-    const [featured, setFeatured] = useState([]);
-    const [ofertas, setOfertas] = useState([]);
+    const [error, setError] = useState('');
     const [loading, setLoading] = useState(true);
+    const [ofertas, setOfertas] = useState([]);
+    const [featured, setFeatured] = useState([]);
+    const [recommended, setRecommended] = useState([]);
 
     useEffect(() => {
         (async function () {
             const querySnapshot = query(collection(db, "products"));
             return await getDocs(querySnapshot);
         })()
-            .then((result) => {
+            .then(result => {
 
                 // Get data
                 const data = shuffle(
-                    result.docs.map((doc) => (
-                        { id: doc.id, ...doc.data() }
-                    )
-                    )
+                    result.docs.map(doc => ({ id: doc.id, ...doc.data() }))
                 )
 
                 // Recommended
@@ -52,30 +48,36 @@ const Home = () => {
                 setFeatured(featured);
 
                 // Offers
-                const ofertas = data.filter((e) => e.discount > 0);
+                const ofertas = data.filter(e => e.discount > 0);
                 // Limit array
                 ofertas.length = 4
                 setOfertas(ofertas);
 
             })
             .catch(error => {
-                setError(new MyError(error, false));
+                setError(error.message);
             })
             .finally(() => setLoading(false))
-    }, [setError, MyError])
+    }, [])
 
     return (
         <>
             {
-                loading
+                error
                     ?
-                    <Loading />
+                    <Error error={error} />
                     :
-                    <>
-                        <ItemsContainer title="Productos Recomendados" items={recommended} />
-                        <ItemsContainer title="Productos Destacados" items={featured} />
-                        <ItemsContainer title="Ofertas" items={ofertas} />
-                    </>
+                    (
+                        loading
+                            ?
+                            <Loading />
+                            :
+                            <>
+                                <ItemsContainer title="Productos Recomendados" items={recommended} />
+                                <ItemsContainer title="Productos Destacados" items={featured} />
+                                <ItemsContainer title="Ofertas" items={ofertas} />
+                            </>
+                    )
             }
         </>
     );

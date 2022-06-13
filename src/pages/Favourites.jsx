@@ -2,27 +2,36 @@
 import { useContext } from "react";
 // Context
 import { FavouriteContex } from "context/FavouriteContexProvider";
-import { ErrorContext } from "context/ErrorContextProvider";
 // Components
 import ItemsContainer from "components/ItemsContainer";
 import ButtonDanger from "components/ButtonDanger";
+import Error from "components/Error";
+import { useState } from "react";
 
 const Favourites = () => {
 
     const { favourited, clearFavourites } = useContext(FavouriteContex);
-    
-    const { setError, MyError } = useContext(ErrorContext);
 
-    if(favourited.length < 1) setError(new MyError('Favoritos vacio', true, 'No se encontraron favoritos', false));
+    const [error, setError] = useState('');
+
+    if (favourited.length < 1 && !error) setError({ message: 'No se encontraron favoritos', reload: false });
 
     return (
         <>
-            <div className="sm:w-1/5 m-auto mt-8">
-                <ButtonDanger onClick={clearFavourites}>
-                    Eliminar favoritos
-                </ButtonDanger>
-            </div>
-            <ItemsContainer title='Favoritos' items={favourited} />
+            {
+                error
+                    ?
+                    <Error error={error} />
+                    :
+                    <>
+                        <div className="sm:w-1/5 m-auto mt-8">
+                            <ButtonDanger onClick={clearFavourites}>
+                                Eliminar favoritos
+                            </ButtonDanger>
+                        </div>
+                        <ItemsContainer title='Favoritos' items={favourited} />
+                    </>
+            }
         </>
     );
 }

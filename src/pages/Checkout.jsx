@@ -1,9 +1,9 @@
 // Components
+import Error from "components/Error";
 import Thankyou from "components/Thankyou";
 import CheckoutForm from "components/CheckoutForm";
 // Context
 import { CartContext } from "context/CartContextProvider";
-import { ErrorContext } from "context/ErrorContextProvider";
 // Firebase
 import { collection, doc, getDocs, increment, query, serverTimestamp, setDoc, updateDoc, where } from "firebase/firestore";
 // React
@@ -15,13 +15,12 @@ const Checkout = () => {
 
     const { cartList, clearCart, cartTotal } = useContext(CartContext);
 
-    const { setError, MyError } = useContext(ErrorContext);
-
-    const [orderId, setOrderId] = useState("");
-    const [buyerName, setBuyerName] = useState("");
+    const [error, setError] = useState('');
+    const [orderId, setOrderId] = useState('');
+    const [buyerName, setBuyerName] = useState('');
     const [formInomplete, setFormIncomplete] = useState(true);
 
-    const createOrder = (e) => {
+    const createOrder = e => {
 
         e.preventDefault();
 
@@ -72,22 +71,30 @@ const Checkout = () => {
                 clearCart();
             })
             .catch(error => {
-                setError(new MyError(error));
+                setError(error.message);
             })
             .finally(() => setFormIncomplete(false));
 
     }
 
     return (
-        <section className="sm:w-1/3 mt-10 mx-auto">
+        <>
             {
-                formInomplete
+                error
                     ?
-                    <CheckoutForm createOrder={createOrder} />
+                    <Error error={error} />
                     :
-                    <Thankyou buyerName={buyerName} orderId={orderId} />
+                    <section className="sm:w-1/3 mt-10 mx-auto">
+                        {
+                            formInomplete
+                                ?
+                                <CheckoutForm createOrder={createOrder} />
+                                :
+                                <Thankyou buyerName={buyerName} orderId={orderId} />
+                        }
+                    </section>
             }
-        </section>
+        </>
     );
 }
 
