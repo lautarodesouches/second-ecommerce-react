@@ -12,7 +12,6 @@ const ErrorContextProvider = ({ children }) => {
     const mainRef = useRef();
 
     useEffect(() => {
-        console.log(mainRef.current);
         mainRef.current && mainRef.current.focus();
     }, [mainRef]);
 
@@ -34,7 +33,7 @@ const ErrorContextProvider = ({ children }) => {
 
     // Show biggest errors in console
     if (error) {
-        if (!error.description.includes('vacio')) console.log(`%c${error.description}`, 'background: red; color: white; padding: 5px 10px; margin: 5px; border-radius: 10px;');
+        if (!error.description.includes('vacio')) console.log(`%c${error.description}`, 'background: crimson; color: white; padding: 5px 10px; margin: 5px; border-radius: 10px;');
     }
 
     return (
