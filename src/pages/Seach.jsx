@@ -4,26 +4,22 @@ import SearchContainer from "components/SearchContainer";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 // React DOM
 import { useSearchParams } from "react-router-dom";
 // Utils
-import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
-// Context
-import { ErrorContext } from "context/ErrorContextProvider";
+import db from "utils/firebaseConfig";
+import Error from "components/Error";
 
 const Search = () => {
 
-    const {setError, MyError} = useContext(ErrorContext);
-
+    const [error, setError] = useState('');
     const [items, setItems] = useState([]);
-    const [copyItems, setCopyItems] = useState([]);
-
-    const [loadign, setLoadign] = useState(true);
-
-    const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
+    const [loadign, setLoadign] = useState(true);
+    const [copyItems, setCopyItems] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     // Get search params
     let [searchParams, setSearchParams] = useSearchParams();
@@ -63,13 +59,13 @@ const Search = () => {
             const querySnapshot = query(collection(db, "products"));
             return await getDocs(querySnapshot);
         })()
-            .then((result) => {
+            .then(result => {
+
+                if (result.docs.length < 1) throw new TypeError("Hubo un error por favor intente mas tarde");
+                
                 // Set Items
                 const data = shuffle(
-                    result.docs.map((doc) => (
-                        { id: doc.id, ...doc.data() }
-                    )
-                    )
+                    result.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
                 )
                 setItems(data);
                 setCopyItems(data);
@@ -94,21 +90,33 @@ const Search = () => {
                 setLoadign(false);
 
             })
-            .catch((error) => {
-                setError(new MyError(error));
-            })
-    }, [MyError, setError]);
+            .catch(error => setError({message: error.message}))
+    }, []);
 
-    useEffect(() => {
-        filter();
-    }, [filter])
+    useEffect(() => filter(), [filter]);
 
     return (
-        loadign
-            ?
-            <Loading />
-            :
-            <SearchContainer brands={brands} categories={categories} handleFilter={handleFilter} items={items} searchParams={searchParams} />
+        <>
+            {
+                error
+                    ?
+                    <Error error={error} />
+                    :
+                    (
+                        loadign
+                            ?
+                            <Loading />
+                            :
+                            <SearchContainer
+                                items={items}
+                                brands={brands}
+                                categories={categories}
+                                searchParams={searchParams}
+                                handleFilter={handleFilter}
+                            />
+                    )
+            }
+        </>
     );
 }
 

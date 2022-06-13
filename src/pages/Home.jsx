@@ -26,6 +26,8 @@ const Home = () => {
         })()
             .then(result => {
 
+                if (result.docs.length < 1) throw new TypeError("Hubo un error por favor intente mas tarde");
+
                 // Get data
                 const data = shuffle(
                     result.docs.map(doc => ({ id: doc.id, ...doc.data() }))
@@ -55,7 +57,7 @@ const Home = () => {
 
             })
             .catch(error => {
-                setError(error.message);
+                setError({message: error.message});
             })
             .finally(() => setLoading(false))
     }, [])

@@ -1,13 +1,15 @@
-// Context
-import { ErrorContext } from "context/ErrorContextProvider";
+// Component
+import Error from "components/Error";
 // React
-import { useContext } from "react";
+import { useState } from "react";
 
 const PageNotFound = () => {
 
-    const {setError, MyError} = useContext(ErrorContext);
+    const [error, setError] = useState('');
 
-    setError(new MyError('Page not found', true, 'Página no encontrada'));
+    setError({ message: 'Página no encontrada', reload: false });
+
+    return <Error error={error} />;
 
 }
 

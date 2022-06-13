@@ -1,5 +1,5 @@
 // React
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // Firebase
 import { collection, getDocs, query, where } from "firebase/firestore";
 // Utils
@@ -9,14 +9,12 @@ import { useParams } from "react-router-dom";
 // Components
 import ItemDetail from "components/ItemDetail";
 import Loading from "components/Loading";
-// Context
-import { ErrorContext } from "context/ErrorContextProvider";
+import Error from "components/Error";
 
 const Item = () => {
 
-    const { setError, MyError } = useContext(ErrorContext);
-
     const [item, setItem] = useState(null);
+    const [error, setError] = useState(true);
     const [loading, setLoading] = useState(true);
 
     const { itemID } = useParams();
@@ -27,22 +25,29 @@ const Item = () => {
             return await getDocs(querySnapshot);
         })()
             .then(result => {
+                if (result.docs.length < 1) throw new TypeError("Hubo un error por favor intente mas tarde");
                 setItem(result.docs.map(doc => ({ id: doc.id, ...doc.data() }))[0]);
             })
             .catch(error => {
-                setError(new MyError(error));
+                setError({ message: error.message });
             })
             .finally(() => setLoading(false))
-    }, [itemID, MyError, setError])
+    }, [itemID])
 
     return (
         <>
             {
-                loading
+                error
                     ?
-                    <Loading />
+                    <Error error={error} />
                     :
-                    <ItemDetail item={item} />
+                    (
+                        loading
+                            ?
+                            <Loading />
+                            :
+                            <ItemDetail item={item} />
+                    )
             }
         </>
     );

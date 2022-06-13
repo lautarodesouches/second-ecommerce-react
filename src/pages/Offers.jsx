@@ -1,20 +1,18 @@
 // Components
+import Error from "components/Error";
 import ItemsContainer from "components/ItemsContainer";
 import Loading from "components/Loading";
 // Firebase
 import { collection, getDocs, query } from "firebase/firestore";
 // React
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // Utils
 import db from "utils/firebaseConfig";
 import { shuffle } from "utils/functions";
-// Context
-import { ErrorContext } from "context/ErrorContextProvider";
 
 const Offers = () => {
 
-    const { setError, MyError } = useContext(ErrorContext);
-
+    const [error, setError] = useState('');
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -25,37 +23,37 @@ const Offers = () => {
         })()
             .then((result) => {
 
-                if (!result.docs) { throw new Error('doc') };
+                if (!result.docs) throw new TypeError("Hubo un error por favor intente mas tarde");
 
                 const data = shuffle(
                     result.docs.map(doc => ({ id: doc.id, ...doc.data() }))
                 )
 
                 let offers = data.filter(e => e.discount > 0);
-                if (!offers) throw new Error('discount');
+                if (!offers) throw new TypeError('No se encontraron ofertas');
                 setItems(offers);
 
             })
             .catch(error => {
-                if (error.message === 'docs') {
-                    setError(new MyError('Sin docs', true, 'Algo salio mal :('));
-                } else if (error.message === 'discount') {
-                    setError(new MyError('Sin descuento', true, 'No se encontraron ofertas'));
-                } else {
-                    setError(new MyError(error));
-                }
+                setError({ message: error.message });
             })
             .finally(() => setLoading(false))
-    }, [MyError, setError])
+    }, [])
 
     return (
         <>
             {
-                loading
+                error
                     ?
-                    <Loading />
+                    <Error error={error} />
                     :
-                    <ItemsContainer title="Ofertas" items={items} />
+                    (
+                        loading
+                            ?
+                            <Loading />
+                            :
+                            <ItemsContainer title="Ofertas" items={items} />
+                    )
             }
         </>
     );

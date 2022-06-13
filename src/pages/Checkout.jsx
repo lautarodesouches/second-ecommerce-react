@@ -71,7 +71,7 @@ const Checkout = () => {
                 clearCart();
             })
             .catch(error => {
-                setError(error.message);
+                setError({message: error.message});
             })
             .finally(() => setFormIncomplete(false));
 
