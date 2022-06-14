@@ -1,12 +1,11 @@
 // React
-import { useContext } from "react";
+import { useContext, useState} from "react";
 // Context
 import { FavouriteContex } from "context/FavouriteContexProvider";
 // Components
 import ItemsContainer from "components/ItemsContainer";
 import ButtonDanger from "components/ButtonDanger";
 import Error from "components/Error";
-import { useState } from "react";
 
 const Favourites = () => {
 
@@ -14,7 +13,7 @@ const Favourites = () => {
 
     const [error, setError] = useState('');
 
-    if (favourited.length < 1 && !error) setError({ message: 'No se encontraron favoritos', reload: false });
+    if (favourited.length < 1 && !error) setError({ message: 'No se encontraron favoritos', reload: true });
 
     return (
         <>

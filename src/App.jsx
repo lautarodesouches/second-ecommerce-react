@@ -14,11 +14,11 @@ import Search from "pages/Seach";
 import PageNotFound from "./pages/PageNotFound";
 import Item from "pages/Item";
 import Cart from "pages/Cart";
+import Checkout from "pages/Checkout";
+import Orders from "pages/Orders";
 // Context
 import FavouriteContexProvider from "context/FavouriteContexProvider";
 import CartContextProvider from "context/CartContextProvider";
-import Checkout from "pages/Checkout";
-import Orders from "pages/Orders";
 
 function App() {
   return (

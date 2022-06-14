@@ -1,4 +1,5 @@
 // Components
+import Error from "components/Error";
 import Loading from "components/Loading";
 import SearchContainer from "components/SearchContainer";
 // Firebase
@@ -10,7 +11,6 @@ import { useSearchParams } from "react-router-dom";
 // Utils
 import { shuffle } from "utils/functions";
 import db from "utils/firebaseConfig";
-import Error from "components/Error";
 
 const Search = () => {
 
