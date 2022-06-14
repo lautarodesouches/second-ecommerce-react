@@ -7,7 +7,7 @@ const PageNotFound = () => {
 
     const [error, setError] = useState('');
 
-    setError({ message: 'Página no encontrada', reload: false });
+    setError({ message: 'Página no encontrada' });
 
     return <Error error={error} />;
 

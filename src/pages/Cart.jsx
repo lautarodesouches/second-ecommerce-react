@@ -22,7 +22,7 @@ const Cart = () => {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        if (cartList.length < 1) setError({ message: 'El carrito se encuentra vacio', reload: false });
+        if (cartList.length < 1) setError({ message: 'El carrito se encuentra vacio' });
     }, [cartList.length])
 
     return (

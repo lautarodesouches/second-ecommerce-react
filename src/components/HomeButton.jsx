@@ -9,7 +9,7 @@ const HomeButton = ({onClick}) => {
     return (
         <Link to={home} className="grow" onClick={onClick}>
             <ButtonPrimary>
-                Volver al inicio
+                Ir al inicio
             </ButtonPrimary>
         </Link>
     );

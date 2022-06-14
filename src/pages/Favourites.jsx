@@ -13,7 +13,7 @@ const Favourites = () => {
 
     const [error, setError] = useState('');
 
-    if (favourited.length < 1 && !error) setError({ message: 'No se encontraron favoritos', reload: true });
+    if (favourited.length < 1 && !error) setError({ message: 'No se encontraron favoritos' });
 
     return (
         <>
